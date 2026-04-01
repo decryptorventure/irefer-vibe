@@ -83,7 +83,7 @@ export function JobDetail() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-6 pb-10">
-      <Button variant="ghost" render={<Link to="/jobs" />} className="-ml-4 text-muted-foreground hover:text-foreground">
+      <Button variant="ghost" render={<Link to="/jobs" />} nativeButton={false} className="-ml-4 text-muted-foreground hover:text-foreground">
         <ArrowLeft className="mr-2 h-4 w-4" />
         Quay lại danh sách Job
       </Button>

@@ -154,7 +154,7 @@ export function JobList() {
                     </>
                   )}
                 </Button>
-                <Button render={<Link to={`/jobs/${job.id}`} />} className="flex-1 gap-2 px-2">
+                <Button render={<Link to={`/jobs/${job.id}`} />} nativeButton={false} className="flex-1 gap-2 px-2">
                   <span className="truncate">Chi tiết</span> <ArrowRight className="h-4 w-4 shrink-0" />
                 </Button>
               </CardFooter>

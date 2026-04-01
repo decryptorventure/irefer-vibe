@@ -19,7 +19,7 @@ export function Sidebar() {
   const location = useLocation();
 
   return (
-    <div className="flex h-full w-64 flex-col border-r bg-card px-3 py-4">
+    <div className="hidden md:flex h-full w-64 flex-col border-r bg-card px-3 py-4">
       <div className="mb-8 flex items-center px-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold text-xl">
           iR

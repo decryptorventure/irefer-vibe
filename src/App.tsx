@@ -13,23 +13,26 @@ import { JobDetail } from "@/pages/JobDetail";
 import { CandidateDetail } from "@/pages/CandidateDetail";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export default function App() {
   return (
     <ThemeProvider defaultTheme="system" storageKey="irefer-theme">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="refer" element={<Refer />} />
-            <Route path="my-referrals" element={<MyReferrals />} />
-            <Route path="referrals/:id" element={<CandidateDetail />} />
-            <Route path="jobs" element={<JobList />} />
-            <Route path="jobs/:id" element={<JobDetail />} />
-          </Route>
-        </Routes>
-        <Toaster />
-      </BrowserRouter>
+      <TooltipProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="refer" element={<Refer />} />
+              <Route path="my-referrals" element={<MyReferrals />} />
+              <Route path="referrals/:id" element={<CandidateDetail />} />
+              <Route path="jobs" element={<JobList />} />
+              <Route path="jobs/:id" element={<JobDetail />} />
+            </Route>
+          </Routes>
+          <Toaster />
+        </BrowserRouter>
+      </TooltipProvider>
     </ThemeProvider>
   );
 }

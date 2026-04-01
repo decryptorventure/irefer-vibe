@@ -26,10 +26,15 @@ export function ModeToggle() {
 export function Header() {
   return (
     <header className="sticky top-0 z-10 flex h-16 flex-shrink-0 items-center gap-x-4 border-b bg-background px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+      <div className="md:hidden flex items-center">
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold text-sm">
+          iR
+        </div>
+      </div>
       <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
         <form className="relative flex flex-1" action="#" method="GET">
           <label htmlFor="search-field" className="sr-only">
-            Tìm kiếm ứng viên hoặc vị trí
+            Tìm kiếm
           </label>
           <Search
             className="pointer-events-none absolute inset-y-0 left-0 h-full w-5 text-muted-foreground"
@@ -38,7 +43,7 @@ export function Header() {
           <Input
             id="search-field"
             className="block h-full w-full border-0 py-0 pl-8 pr-0 text-foreground placeholder:text-muted-foreground focus:ring-0 sm:text-sm bg-transparent shadow-none"
-            placeholder="Tìm kiếm ứng viên hoặc vị trí đang mở..."
+            placeholder="Tìm kiếm..."
             type="search"
             name="search"
           />
