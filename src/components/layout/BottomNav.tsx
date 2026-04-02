@@ -10,9 +10,9 @@ import {
 
 const navigation = [
   { name: "Tổng quan", href: "/", icon: LayoutDashboard },
-  { name: "Việc làm", href: "/jobs", icon: Briefcase },
+  { name: "Job", href: "/jobs", icon: Briefcase },
   { name: "Xếp hạng", href: "/leaderboard", icon: Trophy },
-  { name: "Điểm & Quà", href: "/rewards", icon: Gift },
+  { name: "Tính điểm", href: "/rewards", icon: Gift },
   { name: "Giới thiệu", href: "/refer", icon: UserPlus },
 ];
 

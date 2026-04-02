@@ -12,11 +12,11 @@ import {
 
 const navigation = [
   { name: "Tổng quan", href: "/", icon: LayoutDashboard },
-  { name: "Việc làm hot", href: "/jobs", icon: Briefcase },
-  { name: "Bảng xếp hạng", href: "/leaderboard", icon: Trophy },
-  { name: "Điểm & Quà", href: "/rewards", icon: Gift },
   { name: "Giới thiệu ứng viên", href: "/refer", icon: UserPlus },
-  { name: "Danh sách giới thiệu", href: "/my-referrals", icon: Users },
+  { name: "Danh sách ứng viên", href: "/my-referrals", icon: Users },
+  { name: "Danh sách job", href: "/jobs", icon: Briefcase },
+  { name: "Bảng xếp hạng", href: "/leaderboard", icon: Trophy },
+  { name: "Cơ chế tính điểm", href: "/rewards", icon: Gift },
 ];
 
 export function Sidebar() {
