@@ -10,21 +10,28 @@ export interface AmbassadorTier {
 }
 
 export const AMBASSADOR_TIERS: AmbassadorTier[] = [
-  { name: 'Bronze',  points: 15,  reward: 'Áo / Cốc iKame' },
-  { name: 'Silver',  points: 30,  reward: 'Voucher 500k' },
-  { name: 'Gold',    points: 80,  reward: 'Voucher 2 Triệu' },
-  { name: 'Diamond', points: 120, reward: 'Tiền mặt 5TR' },
+  { name: 'Người nhóm lửa', points: 10, reward: '100.000đ' },
+  { name: 'Đại sứ dự bị', points: 25, reward: '300.000đ' },
+  { name: 'Silver Ambassador', points: 50, reward: '1.000.000đ' },
+  { name: 'Đại sứ bền bỉ', points: 80, reward: '2.000.000đ' },
+  { name: 'Gold Ambassador', points: 100, reward: 'Quà công nghệ 5.000.000đ' },
+  { name: 'Champion of the Year', points: 120, reward: '10.000.000đ + Vinh danh' },
 ];
 
 export const MAX_TIER_POINTS = 120;
 
-/** Points awarded at each hiring stage */
-export const POINTS_RULES = [
-  { event: 'submitted',   label: 'Submit CV hợp lệ',           points: 5  },
-  { event: 'screening',   label: 'CV Pass Sơ loại',             points: 10 },
-  { event: 'interview',   label: 'Pass Phỏng vấn',              points: 20 },
-  { event: 'onboarded',   label: 'Ứng viên Onboard',            points: 50 },
-];
+export const POINTS_MATRIX = {
+  junior: { screening: 1, shared: 2, interview: 3, onboard: 5 },
+  middle: { screening: 2, shared: 4, interview: 5, onboard: 10 },
+  senior: { screening: 3, shared: 6, interview: 10, onboard: 15 },
+};
+
+export const STAGE_LABELS = {
+  screening: 'CV Pass Sơ loại',
+  shared: 'Giới thiệu CV (Khi có Share)',
+  interview: 'Pass Phỏng vấn',
+  onboard: 'Ứng viên Onboard',
+};
 
 /** Get the user's current ambassador tier based on points */
 export function getCurrentTier(points: number): AmbassadorTier | null {

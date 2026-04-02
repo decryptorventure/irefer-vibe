@@ -7,6 +7,7 @@ import { Skeleton } from "@frontend-team/ui-kit";
 import { ArrowLeft, MapPin, Briefcase, Copy, CheckCircle2, Flame, Users, Calendar } from "lucide-react";
 import { toast } from "sonner";
 import { useJob } from "@/hooks/use-jobs";
+import { POINTS_MATRIX } from "@/lib/points-utils";
 
 export function JobDetail() {
   const { id } = useParams<{ id: string }>();
@@ -137,7 +138,7 @@ export function JobDetail() {
             <CardContent className="pt-6 space-y-6">
               <div className="flex items-center justify-between border-b pb-4">
                 <span className="text-muted-foreground">Ứng viên Onboard</span>
-                <span className="text-2xl font-bold text-green-700 dark:text-green-400">+{job.rewardPoints}đ</span>
+                <span className="text-2xl font-bold text-green-700 dark:text-green-400">+{job.rewardPoints ?? POINTS_MATRIX[job.seniorityLevel].onboard}đ</span>
               </div>
 
               <div className="space-y-3">

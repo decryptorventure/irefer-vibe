@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/dialog';
 import { Skeleton } from '@frontend-team/ui-kit';
 import { useJobs } from '@/hooks/use-jobs';
+import { POINTS_MATRIX } from '@/lib/points-utils';
 
 interface Props {
   className?: string;
@@ -56,7 +57,7 @@ export function HotJobsCard({ className }: Props) {
                   </div>
                   <Badge variant="outline" className="text-green-700 dark:text-green-400 border-green-300 dark:border-green-700 bg-green-50 dark:bg-green-950/40 gap-1 px-2 py-1 shrink-0 font-semibold">
                     <Zap className="h-3 w-3" />
-                    +{job.rewardPoints}đ
+                    +{(job.rewardPoints ?? POINTS_MATRIX[job.seniorityLevel].onboard)}đ
                   </Badge>
                 </DialogTrigger>
                 <DialogContent className="w-[95vw] max-w-md sm:max-w-xl max-h-[90vh] overflow-y-auto sm:p-6">
@@ -67,7 +68,7 @@ export function HotJobsCard({ className }: Props) {
                   <div className="space-y-4 mt-4">
                     <div className="flex items-center gap-2 text-green-700 dark:text-green-400 font-bold">
                       <Zap className="h-5 w-5" />
-                      Thưởng khi ứng viên onboard: +{job.rewardPoints}đ
+                      Thưởng khi ứng viên onboard: +{(job.rewardPoints ?? POINTS_MATRIX[job.seniorityLevel].onboard)}đ
                     </div>
                     <div className="text-sm space-y-2">
                       <p><strong>Mô tả công việc:</strong></p>

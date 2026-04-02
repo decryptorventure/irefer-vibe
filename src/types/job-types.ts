@@ -10,8 +10,9 @@ export interface Job {
   responsibilities: string[];
   requirements: string[];
   benefits: string[];
-  /** Points awarded when referred candidate onboards */
-  rewardPoints: number;
+  seniorityLevel: 'junior' | 'middle' | 'senior';
+  /** Base points awarded when referred candidate onboards, computed from POINTS_MATRIX if not provided */
+  rewardPoints?: number;
   publishDate: string;
   deadline?: string;
   /** Reference ID in iHiring ATS */

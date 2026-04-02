@@ -17,12 +17,9 @@ export const mockReferrals: Referral[] = [
     updatedAt: '2026-04-01T10:00:00Z',
     iHiringApplicationId: 'IH-APP-001',
     timeline: [
-      { status: 'submitted',   label: 'Gửi giới thiệu',      date: '28/03/2026 09:00', completed: true,  note: 'Bạn đã gửi CV thành công.', pointsAwarded: 5 },
-      { status: 'screening',   label: 'Lọc CV',               date: '29/03/2026 14:30', completed: true,  note: 'TA đã duyệt CV và đánh giá phù hợp.', pointsAwarded: 10 },
-      { status: 'interview_1', label: 'Phỏng vấn vòng 1',     date: '01/04/2026 10:00', completed: true,  note: 'Pass phỏng vấn kỹ thuật vòng 1.', pointsAwarded: 20 },
-      { status: 'interview_2', label: 'Phỏng vấn vòng 2',     date: '05/04/2026 15:00', completed: false, note: 'Lịch phỏng vấn Culture Fit với Hiring Manager.' },
-      { status: 'offer_sent',  label: 'Gửi Offer',            date: '',                 completed: false, note: '' },
-      { status: 'onboarded',   label: 'Nhận việc (Onboard)',  date: '',                 completed: false, note: 'Thưởng +50đ khi ứng viên nhận việc.' },
+      { status: 'screening',   label: 'Giới thiệu -> Sơ loại CV', date: '29/03/2026 14:30', completed: true,  note: 'TA đã duyệt CV và đánh giá phù hợp.', pointsAwarded: 10 },
+      { status: 'interview_2', label: 'Đang phỏng vấn -> Offer',     date: '05/04/2026 15:00', completed: false, note: 'Lên lịch vòng cuối. Pass sẽ gửi Offer.' },
+      { status: 'onboarded',   label: 'Onboarding',  date: '',                 completed: false, note: 'Thưởng 15đ khi ứng viên nhận việc.' },
     ],
   },
   {
@@ -41,12 +38,9 @@ export const mockReferrals: Referral[] = [
     updatedAt: '2026-04-01T09:00:00Z',
     iHiringApplicationId: 'IH-APP-002',
     timeline: [
-      { status: 'submitted',   label: 'Gửi giới thiệu',      date: '15/03/2026 10:00', completed: true, note: 'Bạn đã gửi CV thành công.', pointsAwarded: 5 },
-      { status: 'screening',   label: 'Lọc CV',               date: '16/03/2026 11:00', completed: true, note: 'TA đã duyệt CV.', pointsAwarded: 10 },
-      { status: 'interview_1', label: 'Phỏng vấn vòng 1',     date: '20/03/2026',       completed: true, note: 'Pass phỏng vấn vòng 1.', pointsAwarded: 20 },
-      { status: 'interview_2', label: 'Phỏng vấn vòng 2',     date: '25/03/2026',       completed: true, note: 'Pass phỏng vấn Culture Fit.', pointsAwarded: 20 },
-      { status: 'offer_sent',  label: 'Gửi Offer',            date: '01/04/2026 09:00', completed: true, note: 'Đã gửi Offer letter cho ứng viên.' },
-      { status: 'onboarded',   label: 'Nhận việc (Onboard)',  date: 'Dự kiến 15/04',   completed: false, note: 'Chờ ứng viên confirm. +50đ khi onboard.' },
+      { status: 'screening',   label: 'Giới thiệu -> Sơ loại CV', date: '16/03/2026 11:00', completed: true, note: 'TA đã duyệt CV.', pointsAwarded: 10 },
+      { status: 'offer_sent',  label: 'Đang phỏng vấn -> Offer',  date: '01/04/2026 09:00', completed: true, note: 'Đã gửi Offer letter cho ứng viên.', pointsAwarded: 15 },
+      { status: 'onboarded',   label: 'Onboarding',  date: 'Dự kiến 15/04',   completed: false, note: 'Chờ ứng viên confirm. +10đ khi onboard.' },
     ],
   },
   {
@@ -62,12 +56,9 @@ export const mockReferrals: Referral[] = [
     submittedAt: '2026-04-01T08:00:00Z',
     updatedAt: '2026-04-01T08:00:00Z',
     timeline: [
-      { status: 'submitted', label: 'Gửi giới thiệu', date: '01/04/2026 08:00', completed: true, note: 'Bạn đã gửi CV thành công.', pointsAwarded: 5 },
-      { status: 'screening', label: 'Lọc CV',          date: '',                completed: false, note: 'Đang chờ TA xử lý.' },
-      { status: 'interview_1', label: 'Phỏng vấn vòng 1', date: '', completed: false, note: '' },
-      { status: 'interview_2', label: 'Phỏng vấn vòng 2', date: '', completed: false, note: '' },
-      { status: 'offer_sent',  label: 'Gửi Offer',         date: '', completed: false, note: '' },
-      { status: 'onboarded',   label: 'Nhận việc (Onboard)', date: '', completed: false, note: '' },
+      { status: 'screening', label: 'Giới thiệu -> Sơ loại CV', date: '01/04/2026 08:00', completed: true, note: 'CV đã gửi. Đang chờ TA xử lý sơ loại.', pointsAwarded: 5 },
+      { status: 'interview_1', label: 'Đang phỏng vấn -> Offer', date: '', completed: false, note: '' },
+      { status: 'onboarded',   label: 'Onboarding', date: '', completed: false, note: '' },
     ],
   },
 ];

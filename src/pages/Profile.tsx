@@ -6,6 +6,7 @@ import { Skeleton } from '@frontend-team/ui-kit';
 import { useAuthStore } from '@/store/auth-store';
 import { useDashboardStats, usePointsHistory } from '@/hooks/use-dashboard';
 import { BadgesGrid } from '@/components/profile/badges-grid';
+import { HotBonusQuests } from '@/components/dashboard/hot-bonus-quests';
 import {
   getCurrentTier,
   getNextTier,
@@ -134,6 +135,9 @@ export function Profile() {
           </Card>
         ))}
       </div>
+
+      {/* ── Hot Bonus Quests ────────────────────────────── */}
+      <HotBonusQuests />
 
       {/* ── Two columns: Badges + Points History ──────── */}
       <div className="grid gap-6 md:grid-cols-2">

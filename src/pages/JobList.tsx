@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useJobs } from "@/hooks/use-jobs";
 import { Job } from "@/types";
 import { JobListSkeleton } from "@/components/skeletons/job-list-skeleton";
+import { POINTS_MATRIX } from "@/lib/points-utils";
 
 export function JobList() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -75,7 +76,7 @@ export function JobList() {
                 <CardContent className="flex-1">
                   <p className="text-sm text-muted-foreground line-clamp-3">{job.description}</p>
                   <div className="mt-4 inline-flex items-center rounded-md bg-green-50 dark:bg-green-950/40 px-2 py-1 text-xs font-semibold text-green-700 dark:text-green-400 border-green-300 dark:border-green-700 border">
-                    Thưởng onboard: +{job.rewardPoints}đ
+                    Thưởng onboard: +{job.rewardPoints ?? POINTS_MATRIX[job.seniorityLevel].onboard}đ
                   </div>
                 </CardContent>
                 <CardFooter className="pt-3 border-t flex flex-row gap-2">
