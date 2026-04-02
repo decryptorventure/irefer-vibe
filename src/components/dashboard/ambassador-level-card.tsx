@@ -1,19 +1,10 @@
-import { Info, Gift, Flame, Trophy, Crown, Gem, Award, Shield, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Info, Gift, Flame, Trophy, Crown, Gem, Award, Shield } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Tooltip } from '@/components/ui/tooltip';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-import {
   AMBASSADOR_TIERS,
   MAX_TIER_POINTS,
-  POINTS_MATRIX,
-  STAGE_LABELS,
   getCurrentTier,
   getNextTier,
   getPointsToNextTier,
@@ -93,9 +84,8 @@ export function AmbassadorLevelCard({ points }: Props) {
         )}
       </div>
 
-      {/* ── Progress bar + milestones (Responsive Step UI) ──────────────────── */}
+      {/* ── Progress bar + milestones (Desktop) ──────────────────── */}
       <div className="relative px-0 md:px-4 mb-8 hidden md:block">
-        {/* Bar track — milestone icons are vertically centered on this */}
         <div className="h-3 w-full bg-muted rounded-full overflow-hidden border border-border">
           <div
             className="h-full bg-gradient-to-r from-yellow-400 to-amber-500 dark:from-yellow-500 dark:to-amber-500 rounded-full transition-all duration-1000 ease-out relative"
@@ -105,7 +95,6 @@ export function AmbassadorLevelCard({ points }: Props) {
           </div>
         </div>
 
-        {/* Milestone icons */}
         {AMBASSADOR_TIERS.map((tier) => {
           const position = (tier.points / MAX_TIER_POINTS) * 100;
           const isAchieved = points >= tier.points;
@@ -162,12 +151,10 @@ export function AmbassadorLevelCard({ points }: Props) {
           const isNext = nextTier?.name === tier.name;
           return (
             <div key={tier.name} className="flex items-center gap-3 relative">
-              {/* Connecting line */}
               {index < AMBASSADOR_TIERS.length - 1 && (
                 <div className={`absolute left-[17px] top-9 bottom-[-16px] w-[2px] ${points >= AMBASSADOR_TIERS[index + 1].points ? 'bg-amber-500' : 'bg-muted'}`} />
               )}
-              {/* Node */}
-              <div className={`w-9 h-9 rounded-full flex items-center justify-center border-[3px] shrink-0 z-10 
+              <div className={`w-9 h-9 rounded-full flex items-center justify-center border-[3px] shrink-0 z-10
                  ${isAchieved ? `${TIER_MILESTONE_ACTIVE[tier.name]}` : isNext ? 'bg-muted border-yellow-500/50' : 'bg-muted border-border opacity-50'}`}>
                 <Gift className={`h-4 w-4 ${isAchieved ? 'text-white' : 'text-muted-foreground'}`} />
               </div>
@@ -195,14 +182,12 @@ export function AmbassadorLevelCard({ points }: Props) {
             nữa để thăng hạng{' '}
             <span className="font-bold text-yellow-600 dark:text-yellow-400">{nextTier.name}</span>.{' '}
             Nhận ngay <span className="font-bold text-foreground">{nextTier.reward}</span> khi lên hạng!{' '}
-            <Dialog>
-              <DialogTrigger className="font-bold text-orange-500 dark:text-orange-400 hover:underline inline-flex items-center gap-0.5 transition-colors mt-2 sm:mt-0 ml-1">
-                Xem cách tính điểm &rarr;
-              </DialogTrigger>
-              <DialogContent className="w-[95vw] max-w-[95vw] lg:max-w-5xl max-h-[90vh] overflow-y-auto p-4 sm:p-6">
-                <ScoringSystemPopup />
-              </DialogContent>
-            </Dialog>
+            <Link
+              to="/rewards"
+              className="font-bold text-orange-500 dark:text-orange-400 hover:underline inline-flex items-center gap-0.5 transition-colors mt-2 sm:mt-0 ml-1"
+            >
+              Xem chi tiết &rarr;
+            </Link>
           </p>
         </div>
       )}
@@ -218,127 +203,5 @@ export function AmbassadorLevelCard({ points }: Props) {
         </div>
       )}
     </div>
-  );
-}
-
-/* ── Popup: Hệ Thống Điểm & Đổi Thưởng ──────────────── */
-
-function ScoringSystemPopup() {
-  return (
-    <>
-      <DialogHeader>
-        <DialogTitle className="text-2xl font-bold">
-          Hệ Thống Điểm & Đổi Thưởng
-        </DialogTitle>
-        <DialogDescription className="text-base">
-          Cơ chế 3 trụ cột giúp bạn nhận thưởng không giới hạn.
-        </DialogDescription>
-      </DialogHeader>
-
-      <div className="flex flex-col xl:flex-row gap-5 mt-6">
-        {/* ─ Pillar 1: Tích Lửa (Matrix Table) ─ */}
-        <div className="bg-muted/50 dark:bg-muted/30 rounded-xl border border-border p-5 flex-1 w-full xl:w-2/5 overflow-x-auto">
-          <div className="text-center mb-4">
-            <div className="mx-auto w-12 h-12 bg-orange-100 dark:bg-orange-500/20 rounded-full flex items-center justify-center mb-3">
-              <Flame className="h-6 w-6 text-orange-500 dark:text-orange-400" />
-            </div>
-            <h3 className="text-base font-bold">1. TÍCH LỬA</h3>
-            <p className="text-xs text-muted-foreground mt-1 mb-4">Điểm cộng ngay khi trạng thái ứng viên (ATS) thay đổi</p>
-          </div>
-          
-          <table className="w-full text-sm text-left whitespace-nowrap min-w-[400px]">
-             <thead className="bg-card">
-               <tr>
-                 <th className="px-3 py-2 font-semibold border-b">Giai đoạn</th>
-                 <th className="px-3 py-2 font-semibold border-b text-center text-blue-600 dark:text-blue-400">Junior<br/><span className="text-[10px] font-normal text-muted-foreground">(L3-L4)</span></th>
-                 <th className="px-3 py-2 font-semibold border-b text-center text-purple-600 dark:text-purple-400">Middle<br/><span className="text-[10px] font-normal text-muted-foreground">(L5-L6)</span></th>
-                 <th className="px-3 py-2 font-semibold border-b text-center text-orange-600 dark:text-orange-400">Senior+<br/><span className="text-[10px] font-normal text-muted-foreground">/Manager</span></th>
-               </tr>
-             </thead>
-             <tbody>
-               {[
-                 { stage: 'screening', label: STAGE_LABELS.screening },
-                 { stage: 'shared', label: STAGE_LABELS.shared, highlight: true },
-                 { stage: 'interview', label: STAGE_LABELS.interview },
-                 { stage: 'onboard', label: STAGE_LABELS.onboard, bold: true },
-               ].map((row) => (
-                 <tr key={row.stage} className="border-b border-border/50 hover:bg-muted/50 transition-colors">
-                   <td className={`px-3 py-2.5 ${row.bold ? 'font-bold' : ''} ${row.highlight ? 'text-blue-500 text-xs italic' : ''}`}>
-                     {row.label}
-                   </td>
-                   <td className="px-3 py-2.5 text-center font-medium">+{POINTS_MATRIX['junior'][row.stage as keyof typeof POINTS_MATRIX.junior]}</td>
-                   <td className="px-3 py-2.5 text-center font-medium">+{POINTS_MATRIX['middle'][row.stage as keyof typeof POINTS_MATRIX.middle]}</td>
-                   <td className="px-3 py-2.5 text-center font-medium">+{POINTS_MATRIX['senior'][row.stage as keyof typeof POINTS_MATRIX.senior]}</td>
-                 </tr>
-               ))}
-             </tbody>
-          </table>
-          <p className="text-[10px] text-muted-foreground mt-3 italic">* Share bài tuyển dụng công khai = x2 điểm vòng duyệt CV</p>
-        </div>
-
-        {/* ─ Pillar 2: Vị Thế Đại Sứ ─ */}
-        <div className="bg-muted/50 dark:bg-muted/30 rounded-xl border border-border p-5 flex-1 xl:w-1/4">
-          <div className="text-center mb-4">
-            <div className="mx-auto w-12 h-12 bg-yellow-100 dark:bg-yellow-500/20 rounded-full flex items-center justify-center mb-3">
-              <Trophy className="h-6 w-6 text-yellow-500 dark:text-yellow-400" />
-            </div>
-            <h3 className="text-base font-bold">2. VỊ THẾ ĐẠI SỨ</h3>
-            <p className="text-xs text-muted-foreground mt-1">Đạt mốc nhận quà + Thăng hạng</p>
-          </div>
-          <div className="space-y-0">
-            {AMBASSADOR_TIERS.map((tier, i) => (
-              <div key={tier.name} className={`flex flex-col py-2.5 ${i < AMBASSADOR_TIERS.length - 1 ? 'border-b border-border border-dashed' : ''}`}>
-                <div className="flex justify-between items-center w-full">
-                  <span className={`text-sm font-semibold ${tier.name === 'Champion of the Year' ? 'text-orange-500 font-bold' : 'text-foreground'}`}>
-                    {tier.name}
-                  </span>
-                  <Badge variant="outline" className="text-[10px] bg-background/50 h-5 px-1.5">{tier.points}đ</Badge>
-                </div>
-                <span className={`text-xs mt-1 ${tier.name === 'Champion of the Year' ? 'text-orange-500 font-medium' : 'text-muted-foreground'}`}>
-                  Thưởng: {tier.reward}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ─ Pillar 3: Lửa Bùng Cháy ─ */}
-        <div className="bg-muted/50 dark:bg-muted/30 rounded-xl border border-border p-5 flex-1 xl:w-1/3">
-          <div className="text-center mb-4">
-            <div className="mx-auto w-12 h-12 bg-red-100 dark:bg-red-500/20 rounded-full flex items-center justify-center mb-3">
-              <Zap className="h-6 w-6 text-red-500 dark:text-red-400" />
-            </div>
-            <h3 className="text-base font-bold">3. LỬA BÙNG CHÁY</h3>
-            <p className="text-xs text-muted-foreground mt-1 mb-4">Thưởng nóng (tiền mặt/điểm) không tính vào rank</p>
-          </div>
-          
-          <div className="space-y-3">
-             <div className="bg-card p-3 rounded-lg border border-border">
-               <div className="flex justify-between items-start mb-1">
-                 <span className="font-bold text-sm text-red-500">Lửa khởi phát</span>
-                 <span className="font-semibold text-xs text-green-600 bg-green-50 px-1.5 py-0.5 rounded">50.000đ</span>
-               </div>
-               <p className="text-xs text-muted-foreground">Cho 5 iKamer đầu tiên gửi CV Qualified (tháng 4)</p>
-             </div>
-             
-             <div className="bg-card p-3 rounded-lg border border-border">
-               <div className="flex justify-between items-start mb-1">
-                 <span className="font-bold text-sm text-red-500">Lửa bền bỉ</span>
-                 <span className="font-semibold text-xs text-green-600 bg-green-50 px-1.5 py-0.5 rounded">500.000đ</span>
-               </div>
-               <p className="text-xs text-muted-foreground">Giới thiệu thành công 2 ứng viên Onboard trong cùng 1 Quý</p>
-             </div>
-
-             <div className="bg-card p-3 rounded-lg border border-border">
-               <div className="flex justify-between items-start mb-1">
-                 <span className="font-bold text-sm text-orange-500">Siêu Hunter Tháng</span>
-                 <span className="font-semibold text-xs text-green-600 bg-green-50 px-1.5 py-0.5 rounded">1.000.000đ</span>
-               </div>
-               <p className="text-xs text-muted-foreground">iKamer có ứng viên onboard nhiều nhất tháng (tối thiểu 2)</p>
-             </div>
-          </div>
-        </div>
-      </div>
-    </>
   );
 }

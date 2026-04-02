@@ -31,6 +31,7 @@ export interface DashboardStats {
   rank: number;
   totalUsers: number;
   monthlyReferrals: number;
+  monthlyPoints: number;
 }
 
 /** Business rules for points awarded at each hiring stage — configurable from admin panel */

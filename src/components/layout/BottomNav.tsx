@@ -2,18 +2,18 @@ import { Link, useLocation } from "react-router-dom";
 import { cn } from "@frontend-team/ui-kit";
 import {
   LayoutDashboard,
-  UserPlus,
-  Users,
   Briefcase,
-  User
+  Trophy,
+  Gift,
+  UserPlus,
 } from "lucide-react";
 
 const navigation = [
   { name: "Tổng quan", href: "/", icon: LayoutDashboard },
-  { name: "Giới thiệu", href: "/refer", icon: UserPlus },
-  { name: "Danh sách", href: "/my-referrals", icon: Users },
   { name: "Việc làm", href: "/jobs", icon: Briefcase },
-  { name: "Hồ sơ", href: "/profile", icon: User },
+  { name: "Xếp hạng", href: "/leaderboard", icon: Trophy },
+  { name: "Điểm & Quà", href: "/rewards", icon: Gift },
+  { name: "Giới thiệu", href: "/refer", icon: UserPlus },
 ];
 
 export function BottomNav() {

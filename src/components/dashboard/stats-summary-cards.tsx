@@ -54,14 +54,15 @@ export function StatsSummaryCards({ stats }: StatsSummaryCardsProps) {
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Điểm tích lửa</CardTitle>
+          <CardTitle className="text-sm font-medium">Điểm tháng này</CardTitle>
           <Zap className="h-4 w-4 fg_orange_accent" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold fg_orange_accent">{stats?.totalPointsEarned ?? 0}</div>
+          <div className="text-2xl font-bold fg_orange_accent">{stats?.monthlyPoints ?? 0}</div>
           <p className="text-xs text-muted-foreground mt-1">
             <span className="fg_success inline-flex items-center font-medium">
-              Bạn có {stats?.currentPoints ?? 0} điểm tích lửa
+              <ArrowUp className="mr-1 h-3 w-3" />
+              Tổng: {stats?.currentPoints ?? 0} điểm
             </span>
           </p>
         </CardContent>

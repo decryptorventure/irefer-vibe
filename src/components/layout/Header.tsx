@@ -85,7 +85,7 @@ export function Header() {
               <DropdownMenuLabel>Tài khoản của tôi</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Link to="/profile" className="w-full">Hồ sơ</Link>
+                <Link to="/rewards" className="w-full">Điểm & Quà</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>Cài đặt</DropdownMenuItem>
               <DropdownMenuItem>Đăng xuất</DropdownMenuItem>

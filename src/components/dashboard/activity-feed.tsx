@@ -104,8 +104,8 @@ export function ActivityFeed({ className }: Props) {
       </CardHeader>
       <CardContent className="flex-1">
         {isLoading ? (
-          <div className="space-y-6 mt-4">
-            {Array.from({ length: 4 }).map((_, i) => (
+          <div className="space-y-5 mt-4">
+            {Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className="flex gap-3">
                 <Skeleton className="h-2 w-2 rounded-full mt-2 shrink-0" />
                 <div className="flex-1 space-y-2">
@@ -116,8 +116,8 @@ export function ActivityFeed({ className }: Props) {
             ))}
           </div>
         ) : (
-          <div className="space-y-6 mt-4">
-            {activities.map((a, i) => renderItem(a, i))}
+          <div className="space-y-5 mt-4">
+            {activities.slice(0, 3).map((a, i) => renderItem(a, i))}
           </div>
         )}
       </CardContent>

@@ -2,19 +2,21 @@ import { Link, useLocation } from "react-router-dom";
 import { cn } from "@frontend-team/ui-kit";
 import {
   LayoutDashboard,
+  Briefcase,
+  Trophy,
+  Gift,
   UserPlus,
   Users,
-  Briefcase,
-  User,
   LogOut
 } from "lucide-react";
 
 const navigation = [
   { name: "Tổng quan", href: "/", icon: LayoutDashboard },
+  { name: "Việc làm hot", href: "/jobs", icon: Briefcase },
+  { name: "Bảng xếp hạng", href: "/leaderboard", icon: Trophy },
+  { name: "Điểm & Quà", href: "/rewards", icon: Gift },
   { name: "Giới thiệu ứng viên", href: "/refer", icon: UserPlus },
   { name: "Danh sách giới thiệu", href: "/my-referrals", icon: Users },
-  { name: "Danh sách Job", href: "/jobs", icon: Briefcase },
-  { name: "Hồ sơ", href: "/profile", icon: User },
 ];
 
 export function Sidebar() {

@@ -11,7 +11,8 @@ import { MyReferrals } from "@/pages/MyReferrals";
 import { JobList } from "@/pages/JobList";
 import { JobDetail } from "@/pages/JobDetail";
 import { CandidateDetail } from "@/pages/CandidateDetail";
-import { Profile } from "@/pages/Profile";
+import { Leaderboard } from "@/pages/Leaderboard";
+import { Rewards } from "@/pages/Rewards";
 import { Toaster } from "@frontend-team/ui-kit";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
@@ -27,7 +28,8 @@ export default function App() {
             <Route path="referrals/:id" element={<CandidateDetail />} />
             <Route path="jobs" element={<JobList />} />
             <Route path="jobs/:id" element={<JobDetail />} />
-            <Route path="profile" element={<Profile />} />
+            <Route path="leaderboard" element={<Leaderboard />} />
+            <Route path="rewards" element={<Rewards />} />
           </Route>
         </Routes>
         <Toaster />

@@ -9,6 +9,7 @@ import { Search, Star, ChevronLeft, ChevronRight, ArrowRight, LayoutGrid, List }
 import { Link } from "react-router-dom";
 import { useMyReferrals } from "@/hooks/use-referrals";
 import { ReferralListSkeleton } from "@/components/skeletons/referral-list-skeleton";
+import { ReferralPipelineHeader, getPipelineStatuses } from "@/components/referrals/referral-pipeline-header";
 import { REFERRAL_STATUS_COLORS, REFERRAL_STATUS_LABELS, STATUS_FILTER_TABS } from "@/lib/referral-status-utils";
 import { ReferralStatus } from "@/types";
 
@@ -16,6 +17,7 @@ const KANBAN_STATUSES: ReferralStatus[] = ['submitted', 'interview_1', 'offer_se
 
 export function MyReferrals() {
   const [activeStatus, setActiveStatus] = useState<ReferralStatus | undefined>(undefined);
+  const [activePipelineStage, setActivePipelineStage] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [viewMode, setViewMode] = useState<"table" | "kanban">("table");
@@ -25,12 +27,21 @@ export function MyReferrals() {
   const allReferrals = referralsPage?.data ?? [];
 
   const filteredReferrals = useMemo(() => {
-    if (!searchQuery.trim()) return allReferrals;
-    const q = searchQuery.toLowerCase();
-    return allReferrals.filter(
-      (r) => r.candidateName.toLowerCase().includes(q) || r.jobTitle.toLowerCase().includes(q)
-    );
-  }, [allReferrals, searchQuery]);
+    let result = allReferrals;
+    // Pipeline stage filter
+    if (activePipelineStage !== null) {
+      const statuses = getPipelineStatuses(activePipelineStage);
+      result = result.filter((r) => statuses.includes(r.status));
+    }
+    // Search filter
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(
+        (r) => r.candidateName.toLowerCase().includes(q) || r.jobTitle.toLowerCase().includes(q)
+      );
+    }
+    return result;
+  }, [allReferrals, activePipelineStage, searchQuery]);
 
   const totalPages = Math.ceil(filteredReferrals.length / itemsPerPage) || 1;
   const paginatedReferrals = filteredReferrals.slice(
@@ -72,6 +83,13 @@ export function MyReferrals() {
           </Button>
         </div>
       </div>
+
+      {/* Pipeline header */}
+      <ReferralPipelineHeader
+        referrals={allReferrals}
+        activeStage={activePipelineStage}
+        onStageClick={(stage) => { setActivePipelineStage(stage); setCurrentPage(1); }}
+      />
 
       <Card>
         <CardHeader>
