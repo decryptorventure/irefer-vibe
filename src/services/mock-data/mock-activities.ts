@@ -1,0 +1,52 @@
+import { ActivityItem } from '@/types/activity-types';
+
+export const mockActivities: ActivityItem[] = [
+  {
+    id: 'A001',
+    actorName: 'Trần Minh Tuấn',
+    action: 'đã được tuyển vào vị trí',
+    targetName: 'Senior DevOps',
+    points: 50,
+    timeAgo: '2 giờ trước',
+    color: 'green',
+    category: 'today',
+  },
+  {
+    id: 'A002',
+    actorName: 'Lê Thị Hương',
+    action: 'đang ở bước Phỏng vấn vòng 2',
+    points: undefined,
+    timeAgo: '5 giờ trước',
+    color: 'blue',
+    category: 'today',
+  },
+  {
+    id: 'A003',
+    actorName: 'Phạm Văn Đức',
+    action: 'vừa được giới thiệu cho vị trí',
+    targetName: 'Product Designer',
+    points: 5,
+    timeAgo: 'Hôm qua',
+    color: 'orange',
+    category: 'yesterday',
+  },
+  {
+    id: 'A004',
+    actorName: 'Ngô Thị Lan',
+    action: 'đã pass phỏng vấn vòng 1 vị trí',
+    targetName: 'Data Analyst',
+    points: 20,
+    timeAgo: '2 ngày trước',
+    color: 'orange',
+    category: 'this_week',
+  },
+  {
+    id: 'A005',
+    actorName: 'Bạn',
+    action: 'đã mở khóa huy hiệu 🏆 Top Recruiter',
+    points: undefined,
+    timeAgo: '3 ngày trước',
+    color: 'green',
+    category: 'this_week',
+  },
+];

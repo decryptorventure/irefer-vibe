@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l d:/irefer-vibe/src/pages/*.tsx d:/irefer-vibe/src/components/layout/*.tsx)",
+      "WebFetch(domain:ui.ikameglobal.com)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:ikameglobal.com)",
+      "Bash(mkdir -p \"d:/irefer-vibe/plans/260402-1058-irefer-frontend-complete\")",
+      "Bash(mkdir -p \"d:/irefer-vibe/plans/reports\")",
+      "Bash(mkdir -p \"d:/irefer-vibe/docs\")",
+      "Bash(node \"C:/Users/iKame/.claude/scripts/set-active-plan.cjs\" \"d:/irefer-vibe/plans/260402-1058-irefer-frontend-complete\")",
+      "Bash(ls d:/irefer-vibe/node_modules/@ikame*)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(node -e \"const p = require\\('d:/irefer-vibe/node_modules/@base-ui/react/package.json'\\); console.log\\(p.version\\)\")",
+      "Bash(wc -l d:/irefer-vibe/src/pages/*.tsx d:/irefer-vibe/src/components/dashboard/*.tsx)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000)",
+      "Bash(kill %1)",
+      "Bash(grep -n \"useJobs\\\\|useReferral\\\\|useJob\\\\|useMyReferrals\\\\|useSubmitReferral\" d:/irefer-vibe/src/pages/*.tsx)",
+      "Bash(node -e \"const pkg = require\\('./node_modules/@frontend-team/ui-kit/package.json'\\); console.log\\('version:', pkg.version\\); console.log\\('exports keys:', Object.keys\\(pkg.exports || {}\\)\\); console.log\\('main:', pkg.main\\); console.log\\('module:', pkg.module\\);\")",
+      "Bash(node -e \"const m = require\\('./node_modules/@frontend-team/ui-kit/dist/ui-kit.umd.cjs'\\); console.log\\('Named exports:', Object.keys\\(m\\).filter\\(k => k !== 'default'\\).join\\(', '\\)\\);\")",
+      "Bash(grep -h \"from \\\\\"@frontend-team/ui-kit\\\\\"\" src/**/*.tsx src/**/**/*.tsx)",
+      "Bash(grep -v \"//.*Button\")",
+      "Bash(grep -o 'hover\\\\\\\\\\\\\\\\:state_[a-z_]*[^{]*{[^}]*}' d:/irefer-vibe/node_modules/@frontend-team/ui-kit/dist/ui-kit.css)",
+      "Bash(grep -o 'hover\\\\\\\\\\\\\\\\:state_fg_[a-z_]*[^{]*{[^}]*}' d:/irefer-vibe/node_modules/@frontend-team/ui-kit/dist/ui-kit.css)"
+    ],
+    "additionalDirectories": [
+      "d:\\irefer-vibe\\src"
+    ]
+  }
+}

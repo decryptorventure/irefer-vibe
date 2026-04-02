@@ -1,10 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
-import { cn } from "@/lib/utils";
-import { 
-  LayoutDashboard, 
-  UserPlus, 
-  Users, 
+import { cn } from "@frontend-team/ui-kit";
+import {
+  LayoutDashboard,
+  UserPlus,
+  Users,
   Briefcase,
+  User,
   LogOut
 } from "lucide-react";
 
@@ -13,20 +14,21 @@ const navigation = [
   { name: "Giới thiệu ứng viên", href: "/refer", icon: UserPlus },
   { name: "Danh sách giới thiệu", href: "/my-referrals", icon: Users },
   { name: "Danh sách Job", href: "/jobs", icon: Briefcase },
+  { name: "Hồ sơ", href: "/profile", icon: User },
 ];
 
 export function Sidebar() {
   const location = useLocation();
 
   return (
-    <div className="hidden md:flex h-full w-64 flex-col border-r bg-card px-3 py-4">
+    <div className="hidden md:flex h-full w-64 flex-col border-r bg_canvas_primary px-3 py-4">
       <div className="mb-8 flex items-center px-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold text-xl">
+        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg_accent_primary fg_on_accent font-bold text-xl">
           iR
         </div>
-        <span className="ml-3 text-xl font-bold tracking-tight text-foreground">iRefer</span>
+        <span className="ml-3 text-xl font-bold tracking-tight text_primary">iRefer</span>
       </div>
-      
+
       <nav className="flex-1 space-y-1">
         {navigation.map((item) => {
           const isActive = location.pathname === item.href;
@@ -37,14 +39,14 @@ export function Sidebar() {
               className={cn(
                 "group flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors",
                 isActive
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  ? "bg_accent_primary fg_on_accent"
+                  : "text_secondary hover:state_secondary_soft hover:state_fg_primary_soft"
               )}
             >
               <item.icon
                 className={cn(
                   "mr-3 h-5 w-5 flex-shrink-0",
-                  isActive ? "text-primary-foreground" : "text-muted-foreground group-hover:text-foreground"
+                  isActive ? "fg_on_accent" : "text_tertiary"
                 )}
                 aria-hidden="true"
               />
@@ -55,8 +57,8 @@ export function Sidebar() {
       </nav>
 
       <div className="mt-auto pt-4 border-t">
-        <button className="group flex w-full items-center rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
-          <LogOut className="mr-3 h-5 w-5 text-muted-foreground group-hover:text-foreground" />
+        <button className="group flex w-full items-center rounded-md px-3 py-2 text-sm font-medium text_secondary hover:state_secondary_soft hover:state_fg_primary_soft transition-colors">
+          <LogOut className="mr-3 h-5 w-5 text_tertiary" />
           Đăng xuất
         </button>
       </div>
