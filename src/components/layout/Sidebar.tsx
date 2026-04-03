@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@frontend-team/ui-kit";
 import {
   LayoutDashboard,
@@ -7,8 +7,11 @@ import {
   Gift,
   UserPlus,
   Users,
-  LogOut
+  LogOut,
+  User
 } from "lucide-react";
+import { useAuthStore } from "@/store/auth-store";
+import { logout } from "@/services/auth-service";
 
 const navigation = [
   { name: "Tổng quan", href: "/", icon: LayoutDashboard },
@@ -21,6 +24,14 @@ const navigation = [
 
 export function Sidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { clearSession, user } = useAuthStore();
+
+  const handleLogout = async () => {
+    await logout();
+    clearSession();
+    navigate('/login', { replace: true });
+  };
 
   return (
     <div className="hidden md:flex h-full w-64 flex-col border-r bg_canvas_primary px-3 py-4">
@@ -58,8 +69,27 @@ export function Sidebar() {
         })}
       </nav>
 
-      <div className="pt-2 border-t mt-4">
-        <button className="group flex w-full items-center rounded-md px-3 py-2 text-sm font-medium text_secondary hover:state_secondary_soft hover:state_fg_primary_soft transition-colors">
+      <div className="pt-2 border-t border_secondary mt-4 space-y-1">
+        {/* Profile link */}
+        <Link
+          to="/profile"
+          className={cn(
+            "group flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors",
+            location.pathname === '/profile'
+              ? "bg_accent_primary fg_on_accent"
+              : "text_secondary hover:state_secondary_soft hover:state_fg_primary_soft"
+          )}
+        >
+          <User className={cn("mr-3 h-5 w-5 text_tertiary", location.pathname === '/profile' && "fg_on_accent")} />
+          {user?.name ?? 'Hồ sơ của tôi'}
+        </Link>
+
+        {/* Logout button */}
+        <button
+          id="btn-sidebar-logout"
+          onClick={handleLogout}
+          className="group flex w-full items-center rounded-md px-3 py-2 text-sm font-medium text_secondary hover:state_secondary_soft hover:state_fg_primary_soft transition-colors"
+        >
           <LogOut className="mr-3 h-5 w-5 text_tertiary" />
           Đăng xuất
         </button>

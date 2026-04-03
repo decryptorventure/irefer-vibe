@@ -1,5 +1,5 @@
 import { Bell, Moon, Sun, Search } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, useDarkMode } from "@frontend-team/ui-kit";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuthStore } from "@/store/auth-store";
+import { logout } from "@/services/auth-service";
 
 export function ModeToggle() {
   const { isDark, toggle } = useDarkMode();
@@ -23,7 +24,14 @@ export function ModeToggle() {
 }
 
 export function Header() {
-  const user = useAuthStore((s) => s.user);
+  const navigate = useNavigate();
+  const { user, clearSession } = useAuthStore();
+
+  const handleLogout = async () => {
+    await logout();
+    clearSession();
+    navigate('/login', { replace: true });
+  };
   const displayName = user?.name ?? 'Nguyễn Thành';
   const initials = displayName
     .split(' ')
@@ -82,13 +90,22 @@ export function Header() {
               </span>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Tài khoản của tôi</DropdownMenuLabel>
+              <DropdownMenuLabel>{user?.email ?? 'Tài khoản của tôi'}</DropdownMenuLabel>
               <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <Link to="/profile" className="w-full">Hồ sơ của tôi</Link>
+              </DropdownMenuItem>
               <DropdownMenuItem>
                 <Link to="/rewards" className="w-full">Điểm & Quà</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>Cài đặt</DropdownMenuItem>
-              <DropdownMenuItem>Đăng xuất</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                id="btn-header-logout"
+                onClick={handleLogout}
+                className="text-red-600 dark:text-red-400 focus:text-red-600"
+              >
+                Đăng xuất
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

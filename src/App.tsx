@@ -13,6 +13,10 @@ import { JobDetail } from "@/pages/JobDetail";
 import { CandidateDetail } from "@/pages/CandidateDetail";
 import { Leaderboard } from "@/pages/Leaderboard";
 import { Rewards } from "@/pages/Rewards";
+import { Profile } from "@/pages/Profile";
+import { Login } from "@/pages/Login";
+import { AuthCallback } from "@/pages/AuthCallback";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { Toaster } from "@frontend-team/ui-kit";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
@@ -21,7 +25,19 @@ export default function App() {
     <TooltipProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          {/* Public routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
+
+          {/* Protected: all app routes require authentication */}
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Layout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<Dashboard />} />
             <Route path="refer" element={<Refer />} />
             <Route path="my-referrals" element={<MyReferrals />} />
@@ -30,6 +46,7 @@ export default function App() {
             <Route path="jobs/:id" element={<JobDetail />} />
             <Route path="leaderboard" element={<Leaderboard />} />
             <Route path="rewards" element={<Rewards />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
         </Routes>
         <Toaster />
