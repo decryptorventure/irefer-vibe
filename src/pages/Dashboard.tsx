@@ -4,6 +4,7 @@ import { useAuthStore } from '@/store/auth-store';
 import { getCurrentTier } from '@/lib/points-utils';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { MascotImage } from '@/components/ui/mascot-image';
 
 import { StatsSummaryCards } from '@/components/dashboard/stats-summary-cards';
 import { AmbassadorLevelCard } from '@/components/dashboard/ambassador-level-card';
@@ -32,30 +33,41 @@ export function Dashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Greeting header */}
-      <div className="flex items-center gap-4">
-        <Avatar className="h-12 w-12 border-2 border_orange shrink-0">
-          {user?.avatar ? (
-            <AvatarImage src={user.avatar} alt={displayName} />
-          ) : null}
-          <AvatarFallback className="bg_orange_subtle fg_orange_accent font-bold">
-            {initials}
-          </AvatarFallback>
-        </Avatar>
-        <div className="flex-1 min-w-0">
-          <h1 className="text-xl font-bold text_primary truncate">
-            Chào {displayName}!
-          </h1>
-          <div className="flex flex-wrap items-center gap-2 mt-0.5">
-            {currentTier && (
-              <Badge variant="warning" className="text-xs">
-                {currentTier.name}
-              </Badge>
-            )}
-            <span className="text-sm text_secondary flex items-center gap-1">
-              <Flame className="h-3.5 w-3.5 fg_orange_accent" />
-              <span className="font-semibold fg_orange_accent">{points}</span> điểm tích lửa
-            </span>
+      {/* Greeting header with mascot */}
+      <div className="relative rounded-xl bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-950/30 dark:to-amber-950/20 border border-orange-100 dark:border-orange-900/30 p-5 md:p-6 overflow-hidden min-h-[120px] md:min-h-[140px]">
+        {/* Decorative circles */}
+        <div className="absolute -right-8 -top-8 w-32 h-32 bg-orange-200/20 dark:bg-orange-500/10 rounded-full blur-2xl" />
+
+        <div className="relative z-10 flex items-center gap-5">
+          <MascotImage
+            variant="greeting"
+            size="2xl"
+            className="shrink-0 drop-shadow-md -ml-2"
+          />
+          <Avatar className="h-20 w-20 border-2 border_orange shrink-0">
+            {user?.avatar ? (
+              <AvatarImage src={user.avatar} alt={displayName} />
+            ) : null}
+            <AvatarFallback className="bg_orange_subtle fg_orange_accent font-bold text-2xl">
+              {initials}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex-1 min-w-0">
+            <h1 className="text-2xl font-bold text_primary truncate">
+              Chào {displayName}! 🔥
+            </h1>
+            <p className="text-base text_secondary mt-0.5 font-medium">Hôm nay bạn đã <span className="font-semibold fg_orange_accent">góp lửa</span> chưa?</p>
+            <div className="flex flex-wrap items-center gap-3 mt-2">
+              {currentTier && (
+                <Badge variant="warning" className="text-sm px-3 py-0.5">
+                  {currentTier.name}
+                </Badge>
+              )}
+              <span className="text-base text_secondary flex items-center gap-1.5">
+                <Flame className="h-4 w-4 fg_orange_accent" />
+                <span className="font-semibold fg_orange_accent">{points}</span> điểm tích lửa
+              </span>
+            </div>
           </div>
         </div>
       </div>

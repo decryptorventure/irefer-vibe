@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useAuthStore } from '@/store/auth-store';
 import { useDashboardStats } from '@/hooks/use-dashboard';
 import { getCurrentTier, getNextTier, getPointsToNextTier, getTierProgress } from '@/lib/points-utils';
+import { MascotImage } from '@/components/ui/mascot-image';
 
 import { ScoringMatrixSection } from '@/components/rewards/scoring-matrix-section';
 import { TierProgressionSection } from '@/components/rewards/tier-progression-section';
@@ -23,9 +24,19 @@ export function Rewards() {
   return (
     <div className="space-y-6">
       {/* Points summary banner */}
-      <div className="rounded-xl bg-gradient-to-r from-[#FF6B00] to-[#FFC700] p-5 md:p-6 shadow-lg relative overflow-hidden">
+      <div className="rounded-xl bg-gradient-to-r from-[#FF6B00] to-[#FFC700] p-5 md:p-6 shadow-lg relative overflow-hidden min-h-[140px] md:min-h-[160px]">
         <div className="absolute -right-8 -top-8 w-40 h-40 bg-white/10 rounded-full blur-2xl" />
-        <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+
+        {/* Mascot gift decoration — right side, won't overlap text */}
+        <MascotImage
+          variant="gift"
+          size="3xl"
+          hideOnMobile
+          onDarkBg
+          className="absolute right-4 -bottom-6 drop-shadow-lg z-0 opacity-80"
+        />
+
+        <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-4 pr-0 md:pr-48">
           <div className="flex-1 min-w-0">
             <h1 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
               <Flame className="h-6 w-6" /> Điểm & Quà Tặng
@@ -78,10 +89,8 @@ export function Rewards() {
       {/* Reward Redemption placeholder */}
       <Card>
         <CardContent className="flex flex-col items-center justify-center py-10 gap-3">
-          <div className="p-3 rounded-full bg_secondary">
-            <Gift className="h-8 w-8 fg_orange_accent" />
-          </div>
-          <p className="font-bold text_primary">Đổi Thưởng</p>
+          <MascotImage variant="gift" size="2xl" className="mascot-bounce" />
+          <p className="font-bold text_primary text-lg">Đổi Thưởng</p>
           <Badge variant="warning" className="text-xs">Sắp ra mắt</Badge>
           <p className="text-sm text_secondary text-center max-w-sm">
             Chức năng đổi điểm lấy quà tặng sẽ sớm ra mắt. Hãy tích lũy điểm ngay!

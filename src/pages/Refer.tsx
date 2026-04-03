@@ -24,6 +24,7 @@ import {
 
 import { useReferralForm } from "@/hooks/use-referral-form";
 import { useJobs } from "@/hooks/use-jobs";
+import { MascotImage } from "@/components/ui/mascot-image";
 
 export function Refer() {
   const {
@@ -57,7 +58,7 @@ export function Refer() {
       {/* Referral Banner */}
       <div className="w-full rounded-xl overflow-hidden relative bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-md">
         <div className="absolute inset-0 opacity-20 bg-[url('https://picsum.photos/seed/office/1200/400')] bg-cover bg-center mix-blend-overlay"></div>
-        <div className="relative p-6 sm:p-8 md:p-10 flex flex-col items-start justify-center min-h-[160px] sm:min-h-[200px]">
+        <div className="relative z-10 p-6 sm:p-8 md:p-10 flex flex-col items-start justify-center min-h-[160px] sm:min-h-[200px]">
           <Badge className="bg-white/20 hover:bg-white/30 text-white border-none mb-3 backdrop-blur-sm">Chương trình giới thiệu</Badge>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 max-w-lg leading-tight">Giới thiệu nhân tài, nhận thưởng liền tay!</h2>
           <p className="text-orange-50 max-w-md text-sm sm:text-base">Mời bạn bè gia nhập công ty và nhận ngay phần thưởng hấp dẫn khi ứng viên nhận việc thành công.</p>

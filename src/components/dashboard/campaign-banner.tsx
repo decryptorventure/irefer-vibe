@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Sparkles, Users, Flame, ArrowRight, Gift, CheckCircle } from "lucide-react";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { MascotImage } from "@/components/ui/mascot-image";
 
 export function CampaignBanner() {
   return (
@@ -12,7 +13,7 @@ export function CampaignBanner() {
         <div className="absolute -right-6 -top-6 w-32 h-32 bg-white/20 rounded-full blur-2xl group-hover:bg-white/30 transition-all duration-500"></div>
         <div className="absolute -bottom-8 -right-8 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
         <Sparkles className="absolute top-4 right-4 h-12 w-12 text-white/30 -rotate-12" />
-        <Users className="absolute bottom-0 right-4 h-24 w-24 text-white/10 translate-y-4" />
+        <MascotImage variant="encourage" size="2xl" hideOnMobile onDarkBg className="absolute -bottom-4 right-2 opacity-80 drop-shadow-md z-0" />
 
         <div className="relative z-10">
           <div className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-sm px-2.5 py-1 rounded-full text-white text-xs font-semibold mb-3 border border-white/30 shadow-sm">

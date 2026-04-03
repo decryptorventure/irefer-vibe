@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { LeaderboardEntry } from '@/types';
 
@@ -29,9 +29,10 @@ export function LeaderboardList({ entries }: Props) {
           <div className="w-8 text-center font-bold text_secondary text-sm shrink-0">
             {user.rank}
           </div>
-          <Avatar className="h-9 w-9 ml-2 shrink-0">
+          <Avatar className="h-9 w-9 ml-2 shrink-0 bg-background">
+            <AvatarImage src={user.avatar || `https://i.pravatar.cc/150?u=${user.userId || user.name}`} alt={user.name} />
             <AvatarFallback className="bg_secondary text_primary font-semibold text-sm">
-              {user.avatar ?? user.name.slice(0, 2).toUpperCase()}
+              {user.name.slice(0, 2).toUpperCase()}
             </AvatarFallback>
           </Avatar>
           <div className="ml-3 flex-1 min-w-0">

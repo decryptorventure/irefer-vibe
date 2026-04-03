@@ -12,6 +12,7 @@ import { ReferralListSkeleton } from "@/components/skeletons/referral-list-skele
 import { ReferralPipelineHeader, getPipelineStatuses } from "@/components/referrals/referral-pipeline-header";
 import { REFERRAL_STATUS_COLORS, REFERRAL_STATUS_LABELS, STATUS_FILTER_TABS } from "@/lib/referral-status-utils";
 import { ReferralStatus } from "@/types";
+import { MascotImage } from "@/components/ui/mascot-image";
 
 const KANBAN_STATUSES: ReferralStatus[] = ['submitted', 'interview_1', 'offer_sent', 'onboarded', 'rejected'];
 
@@ -176,8 +177,12 @@ export function MyReferrals() {
                       ))
                     ) : (
                       <TableRow>
-                        <TableCell colSpan={6} className="h-24 text-center text-muted-foreground">
-                          Không tìm thấy ứng viên nào.
+                        <TableCell colSpan={6} className="h-48">
+                          <div className="flex flex-col items-center justify-center gap-3 py-6">
+                            <MascotImage variant="encourage" size="2xl" className="mascot-bounce opacity-90" />
+                            <p className="text-muted-foreground font-semibold text-base">Không tìm thấy ứng viên nào.</p>
+                            <p className="text-sm text-muted-foreground">Hãy thử thay đổi bộ lọc hoặc giới thiệu thêm ứng viên!</p>
+                          </div>
                         </TableCell>
                       </TableRow>
                     )}
@@ -250,8 +255,9 @@ export function MyReferrals() {
                         </Card>
                       ))}
                       {columnReferrals.length === 0 && (
-                        <div className="text-center p-4 text-sm text-muted-foreground border-2 border-dashed rounded-lg">
-                          Trống
+                        <div className="flex flex-col items-center p-6 text-sm text-muted-foreground border-2 border-dashed rounded-lg gap-2">
+                          <MascotImage variant="greeting" size="lg" animate={false} />
+                          <span>Trống</span>
                         </div>
                       )}
                     </div>

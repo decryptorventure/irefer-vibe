@@ -86,9 +86,9 @@ export function AmbassadorLevelCard({ points }: Props) {
 
       {/* ── Progress bar + milestones (Desktop) ──────────────────── */}
       <div className="relative px-0 md:px-4 mb-8 hidden md:block">
-        <div className="h-3 w-full bg-muted rounded-full overflow-hidden border border-border">
+        <div className="h-4 w-full bg-muted rounded-full overflow-hidden border border-border shadow-inner">
           <div
-            className="h-full bg-gradient-to-r from-yellow-400 to-amber-500 dark:from-yellow-500 dark:to-amber-500 rounded-full transition-all duration-1000 ease-out relative"
+            className="h-full bg-gradient-to-r from-yellow-400 to-orange-500 dark:from-yellow-500 dark:to-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.6)] rounded-full transition-all duration-1000 ease-out relative"
             style={{ width: `${progressPercentage}%` }}
           >
             <div className="absolute inset-0 bg-white/20 dark:bg-white/10 rounded-full" />
@@ -99,6 +99,7 @@ export function AmbassadorLevelCard({ points }: Props) {
           const position = (tier.points / MAX_TIER_POINTS) * 100;
           const isAchieved = points >= tier.points;
           const isNext = nextTier?.name === tier.name;
+          const isHighestAchieved = isAchieved && currentTier?.name === tier.name;
 
           return (
             <div
@@ -106,7 +107,7 @@ export function AmbassadorLevelCard({ points }: Props) {
               className="absolute flex flex-col items-center"
               style={{
                 left: `${position}%`,
-                top: '-12px',
+                top: isHighestAchieved ? '-16px' : '-10px',
                 transform: 'translateX(-50%)',
               }}
             >
@@ -121,15 +122,21 @@ export function AmbassadorLevelCard({ points }: Props) {
               >
                 <div
                   className={`
-                    w-9 h-9 rounded-full flex items-center justify-center border-[3px] transition-all duration-300 cursor-pointer shadow-md hover:scale-110 z-10
-                    ${isAchieved
-                      ? `${TIER_MILESTONE_ACTIVE[tier.name]} shadow-lg`
-                      : isNext
-                        ? 'bg-muted border-yellow-500/50 dark:border-yellow-400/50 animate-pulse'
-                        : 'bg-muted border-border opacity-50'}
+                    rounded-full flex items-center justify-center border-[3px] transition-all duration-300 cursor-pointer shadow-md hover:scale-110 z-10
+                    ${isHighestAchieved
+                      ? `${TIER_MILESTONE_ACTIVE[tier.name]} animate-pulse-glow w-12 h-12 shadow-xl ring-4 ring-orange-500/20`
+                      : isAchieved
+                        ? `${TIER_MILESTONE_ACTIVE[tier.name]} shadow-lg w-9 h-9`
+                        : isNext
+                          ? 'w-9 h-9 bg-muted border-yellow-500/50 dark:border-yellow-400/50 animate-pulse'
+                          : 'w-9 h-9 bg-muted border-border opacity-40'}
                   `}
                 >
-                  <Gift className={`h-4 w-4 ${isAchieved ? 'text-white' : 'text-muted-foreground'}`} />
+                  {isHighestAchieved ? (
+                    <Flame className="h-6 w-6 text-white drop-shadow-md" />
+                  ) : (
+                    <Gift className={`h-4 w-4 ${isAchieved ? 'text-white' : 'text-muted-foreground'}`} />
+                  )}
                 </div>
               </Tooltip>
               <div className="mt-3 text-center whitespace-nowrap hidden lg:block">
@@ -149,19 +156,26 @@ export function AmbassadorLevelCard({ points }: Props) {
         {AMBASSADOR_TIERS.map((tier, index) => {
           const isAchieved = points >= tier.points;
           const isNext = nextTier?.name === tier.name;
+          const isHighestAchieved = isAchieved && currentTier?.name === tier.name;
+          
           return (
             <div key={tier.name} className="flex items-center gap-3 relative">
               {index < AMBASSADOR_TIERS.length - 1 && (
-                <div className={`absolute left-[17px] top-9 bottom-[-16px] w-[2px] ${points >= AMBASSADOR_TIERS[index + 1].points ? 'bg-amber-500' : 'bg-muted'}`} />
+                <div className={`absolute left-[17px] top-9 bottom-[-16px] w-[2px] ${points >= AMBASSADOR_TIERS[index + 1].points ? 'bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.5)]' : 'bg-muted'}`} />
               )}
-              <div className={`w-9 h-9 rounded-full flex items-center justify-center border-[3px] shrink-0 z-10
-                 ${isAchieved ? `${TIER_MILESTONE_ACTIVE[tier.name]}` : isNext ? 'bg-muted border-yellow-500/50' : 'bg-muted border-border opacity-50'}`}>
-                <Gift className={`h-4 w-4 ${isAchieved ? 'text-white' : 'text-muted-foreground'}`} />
+              <div className={`rounded-full flex items-center justify-center border-[3px] shrink-0 z-10 transition-all
+                 ${isHighestAchieved ? `${TIER_MILESTONE_ACTIVE[tier.name]} animate-pulse-glow w-10 h-10 shadow-lg -ml-0.5` : isAchieved ? `${TIER_MILESTONE_ACTIVE[tier.name]} w-9 h-9` : isNext ? 'w-9 h-9 bg-muted border-yellow-500/50' : 'w-9 h-9 bg-muted border-border opacity-50'}`}>
+                {isHighestAchieved ? (
+                    <Flame className="h-5 w-5 text-white drop-shadow-sm" />
+                  ) : (
+                    <Gift className={`h-4 w-4 ${isAchieved ? 'text-white' : 'text-muted-foreground'}`} />
+                )}
               </div>
-              <div>
-                <div className={`text-sm font-bold ${isAchieved ? TIER_TEXT_ACTIVE[tier.name] : 'text-muted-foreground'}`}>
+              <div className={isHighestAchieved ? '-mt-1' : ''}>
+                <div className={`text-sm font-bold ${isHighestAchieved ? 'text-orange-600 dark:text-orange-400 text-base drop-shadow-sm' : isAchieved ? TIER_TEXT_ACTIVE[tier.name] : 'text-muted-foreground'}`}>
                   {tier.name} <span className="font-normal text-xs ml-1">({tier.points}đ)</span>
                 </div>
+                {isHighestAchieved && <div className="text-[10px] text-orange-600/80 dark:text-orange-400/80 font-semibold uppercase tracking-wider mt-0.5 animate-pulse">Vị trí hiện tại</div>}
                 {isNext && <div className="text-xs text-muted-foreground mt-0.5">Phần thưởng: {tier.reward}</div>}
               </div>
             </div>

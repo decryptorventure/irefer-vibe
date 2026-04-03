@@ -128,3 +128,87 @@
     @apply font-sans;
     }
 }
+
+/* ── Mascot animations ─────────────────────────── */
+@keyframes mascot-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes mascot-wave {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(8deg); }
+  75% { transform: rotate(-8deg); }
+}
+
+@keyframes mascot-bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-8px) scale(1.05); }
+}
+
+.mascot-float {
+  animation: mascot-float 3s ease-in-out infinite;
+}
+
+.mascot-wave:hover {
+  animation: mascot-wave 0.6s ease-in-out;
+}
+
+.mascot-bounce {
+  animation: mascot-bounce 2s ease-in-out infinite;
+}
+
+/* ── Glassmorphism & Leaderboard 3D effects ──────────────── */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.dark .glass-panel {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.glow-text {
+  text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 15px -3px var(--glow-color, rgba(251, 146, 60, 0.5)); transform: scale(1); }
+  50% { box-shadow: 0 0 25px 8px var(--glow-color, rgba(251, 146, 60, 0.8)); transform: scale(1.05); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.podium-3d {
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.podium-3d::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: inherit;
+  border-radius: inherit;
+  transform: translateY(12px) scale(0.95);
+  filter: blur(12px);
+  z-index: -1;
+  opacity: 0.8;
+}
+
+.podium-3d::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 15px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+  border-radius: inherit;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}

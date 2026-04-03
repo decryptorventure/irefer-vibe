@@ -10,6 +10,7 @@ import { useJobs } from "@/hooks/use-jobs";
 import { Job } from "@/types";
 import { JobListSkeleton } from "@/components/skeletons/job-list-skeleton";
 import { POINTS_MATRIX } from "@/lib/points-utils";
+import { MascotImage } from "@/components/ui/mascot-image";
 
 export function JobList() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -29,8 +30,8 @@ export function JobList() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex-1">
           <h1 className="text-3xl font-bold tracking-tight">Danh sách Job</h1>
           <p className="text-muted-foreground mt-1">Các vị trí đang tuyển dụng. Hãy copy JD và gửi cho ứng viên tiềm năng!</p>
         </div>
@@ -94,8 +95,10 @@ export function JobList() {
               </Card>
             ))
           ) : (
-            <div className="col-span-full text-center py-12 text-muted-foreground">
-              Không tìm thấy công việc nào phù hợp với tìm kiếm của bạn.
+            <div className="col-span-full flex flex-col items-center justify-center py-16 gap-4">
+              <MascotImage variant="encourage" size="3xl" className="mascot-bounce opacity-90" />
+              <p className="text-muted-foreground font-semibold text-lg">Không tìm thấy công việc nào phù hợp.</p>
+              <p className="text-sm text-muted-foreground">Hãy thử thay đổi từ khóa tìm kiếm nhé!</p>
             </div>
           )}
         </div>
