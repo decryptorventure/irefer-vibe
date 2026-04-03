@@ -23,10 +23,16 @@
       "Bash(grep -h \"from \\\\\"@frontend-team/ui-kit\\\\\"\" src/**/*.tsx src/**/**/*.tsx)",
       "Bash(grep -v \"//.*Button\")",
       "Bash(grep -o 'hover\\\\\\\\\\\\\\\\:state_[a-z_]*[^{]*{[^}]*}' d:/irefer-vibe/node_modules/@frontend-team/ui-kit/dist/ui-kit.css)",
-      "Bash(grep -o 'hover\\\\\\\\\\\\\\\\:state_fg_[a-z_]*[^{]*{[^}]*}' d:/irefer-vibe/node_modules/@frontend-team/ui-kit/dist/ui-kit.css)"
+      "Bash(grep -o 'hover\\\\\\\\\\\\\\\\:state_fg_[a-z_]*[^{]*{[^}]*}' d:/irefer-vibe/node_modules/@frontend-team/ui-kit/dist/ui-kit.css)",
+      "Bash(node %USERPROFILE%/.claude/scripts/set-active-plan.cjs \"d:/irefer-vibe/plans/260403-0916-ui-mascot-leaderboard-ambassador\")",
+      "Bash(node \"C:/Users/iKame/.claude/scripts/set-active-plan.cjs\" \"d:/irefer-vibe/plans/260403-0916-ui-mascot-leaderboard-ambassador\")",
+      "Bash(npx tsc:*)",
+      "Bash(grep -r \"font\\\\|fontFamily\\\\|Vietnamese\\\\|Inter\\\\|Roboto\" d:/irefer-vibe/src/index.css d:/irefer-vibe/index.html d:/irefer-vibe/tailwind.config*)",
+      "Bash(ls d:/irefer-vibe/src/*.tsx d:/irefer-vibe/src/*.ts)"
     ],
     "additionalDirectories": [
-      "d:\\irefer-vibe\\src"
+      "d:\\irefer-vibe\\src",
+      "d:\\irefer-vibe\\plans"
     ]
   }
 }

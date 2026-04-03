@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Info, Gift, Flame, Trophy, Crown, Gem, Award, Shield } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import { Gift, Flame, Crown, Gem, Zap, ArrowRight } from 'lucide-react';
+import { cn } from '@frontend-team/ui-kit';
 import { Tooltip } from '@/components/ui/tooltip';
+import { MascotImage } from '@/components/ui/mascot-image';
 import {
   AMBASSADOR_TIERS,
   MAX_TIER_POINTS,
@@ -10,212 +11,232 @@ import {
   getPointsToNextTier,
   getTierProgress,
 } from '@/lib/points-utils';
+import {
+  TIER_CARD_GRADIENT,
+  TIER_NEXT_BG,
+  TIER_MASCOT_VARIANT,
+  TIER_ICON_MAP,
+  TIER_MILESTONE_ACTIVE,
+  TIER_TEXT_ACTIVE,
+} from './ambassador-level-card-config';
 
 interface Props {
   points: number;
 }
-
-/* ── Tier visual config ───────────────────────────────── */
-const TIER_ICONS: Record<string, React.ReactNode> = {
-  'Người nhóm lửa': <Flame className="h-5 w-5" />,
-  'Đại sứ dự bị': <Shield className="h-5 w-5" />,
-  'Silver Ambassador': <Award className="h-5 w-5" />,
-  'Đại sứ bền bỉ': <Crown className="h-5 w-5" />,
-  'Gold Ambassador': <Gem className="h-5 w-5" />,
-  'Champion of the Year': <Trophy className="h-5 w-5" />,
-};
-
-const TIER_BADGE_STYLES: Record<string, string> = {
-  'Người nhóm lửa': 'bg-orange-100 text-orange-700 border-orange-300 dark:bg-orange-900/40 dark:text-orange-400 dark:border-orange-700/50',
-  'Đại sứ dự bị': 'bg-blue-100 text-blue-700 border-blue-300 dark:bg-blue-900/40 dark:text-blue-400 dark:border-blue-700/50',
-  'Silver Ambassador': 'bg-slate-100 text-slate-600 border-slate-300 dark:bg-slate-700/40 dark:text-slate-300 dark:border-slate-600/50',
-  'Đại sứ bền bỉ': 'bg-amber-100 text-amber-700 border-amber-300 dark:bg-amber-900/40 dark:text-amber-400 dark:border-amber-700/50',
-  'Gold Ambassador': 'bg-yellow-100 text-yellow-700 border-yellow-300 dark:bg-yellow-900/40 dark:text-yellow-400 dark:border-yellow-700/50',
-  'Champion of the Year': 'bg-cyan-100 text-cyan-700 border-cyan-300 dark:bg-cyan-900/40 dark:text-cyan-400 dark:border-cyan-700/50',
-};
-
-const TIER_MILESTONE_ACTIVE: Record<string, string> = {
-  'Người nhóm lửa': 'bg-orange-500 border-orange-300 shadow-orange-500/40 dark:border-orange-400',
-  'Đại sứ dự bị': 'bg-blue-500 border-blue-300 shadow-blue-500/40 dark:border-blue-400',
-  'Silver Ambassador': 'bg-slate-400 border-slate-200 shadow-slate-400/40 dark:border-slate-300',
-  'Đại sứ bền bỉ': 'bg-amber-500 border-amber-300 shadow-amber-500/40 dark:border-amber-400',
-  'Gold Ambassador': 'bg-yellow-500 border-yellow-300 shadow-yellow-500/40 dark:border-yellow-400',
-  'Champion of the Year': 'bg-cyan-400 border-cyan-200 shadow-cyan-400/40 dark:border-cyan-300',
-};
-
-const TIER_TEXT_ACTIVE: Record<string, string> = {
-  'Người nhóm lửa': 'text-orange-600 dark:text-orange-400',
-  'Đại sứ dự bị': 'text-blue-600 dark:text-blue-400',
-  'Silver Ambassador': 'text-slate-500 dark:text-slate-300',
-  'Đại sứ bền bỉ': 'text-amber-600 dark:text-amber-400',
-  'Gold Ambassador': 'text-yellow-600 dark:text-yellow-400',
-  'Champion of the Year': 'text-cyan-600 dark:text-cyan-400',
-};
-
-/* ── Component ────────────────────────────────────────── */
 
 export function AmbassadorLevelCard({ points }: Props) {
   const progressPercentage = getTierProgress(points);
   const currentTier = getCurrentTier(points);
   const nextTier = getNextTier(points);
   const pointsNeeded = getPointsToNextTier(points);
-  const currentTierName = currentTier?.name ?? 'Chưa có hạng';
+  const currentTierName = currentTier?.name ?? 'Người nhóm lửa';
+
+  const TierIcon = TIER_ICON_MAP[currentTierName];
+  const mascotVariant = TIER_MASCOT_VARIANT[currentTierName] ?? 'celebrate';
+  const gradient = TIER_CARD_GRADIENT[currentTierName] ?? 'from-orange-500 to-amber-400';
 
   return (
-    <div className="rounded-xl bg-card border border-border p-6 md:p-8 shadow-sm transition-colors overflow-hidden">
-      {/* ── Header ─────────────────────────────────────── */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-3">
-        <div>
-          <div className="flex items-center gap-2">
-            <Crown className="h-5 w-5 text-yellow-500 dark:text-yellow-400" />
-            <h2 className="text-xl font-bold text-foreground">Đại sứ iKame</h2>
-          </div>
-          <p className="text-muted-foreground mt-1 text-sm">
-            Bạn đang có <span className="font-bold text-yellow-600 dark:text-yellow-400">{points} điểm tích lửa</span>
-          </p>
-        </div>
-        {currentTier && (
-          <Badge
-            className={`${TIER_BADGE_STYLES[currentTierName]} border px-3 py-1.5 text-sm font-semibold flex items-center gap-1.5`}
-          >
-            {TIER_ICONS[currentTierName]}
-            Hạng {currentTierName}
-          </Badge>
-        )}
-      </div>
+    <div className="rounded-xl border border-border shadow-sm overflow-hidden">
+      {/* ── Gradient header band ────────────────────────── */}
+      <div className={cn('relative p-5 md:p-6 bg-gradient-to-r', gradient)}>
+        <div className="absolute -right-6 -top-6 w-24 h-24 bg-white/10 rounded-full blur-2xl" />
+        <div className="absolute right-16 bottom-0 w-16 h-16 bg-white/10 rounded-full blur-xl" />
 
-      {/* ── Progress bar + milestones (Desktop) ──────────────────── */}
-      <div className="relative px-0 md:px-4 mb-8 hidden md:block">
-        <div className="h-4 w-full bg-muted rounded-full overflow-hidden border border-border shadow-inner">
-          <div
-            className="h-full bg-gradient-to-r from-yellow-400 to-orange-500 dark:from-yellow-500 dark:to-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.6)] rounded-full transition-all duration-1000 ease-out relative"
-            style={{ width: `${progressPercentage}%` }}
-          >
-            <div className="absolute inset-0 bg-white/20 dark:bg-white/10 rounded-full" />
-          </div>
-        </div>
-
-        {AMBASSADOR_TIERS.map((tier) => {
-          const position = (tier.points / MAX_TIER_POINTS) * 100;
-          const isAchieved = points >= tier.points;
-          const isNext = nextTier?.name === tier.name;
-          const isHighestAchieved = isAchieved && currentTier?.name === tier.name;
-
+        {/* Mascot — positioned in the header exactly above the current tier bubble */}
+        {(() => {
+          const mascotTier = currentTier ?? AMBASSADOR_TIERS[0];
+          const mascotPosition = (mascotTier.points / MAX_TIER_POINTS) * 100;
           return (
-            <div
-              key={tier.name}
-              className="absolute flex flex-col items-center"
-              style={{
-                left: `${position}%`,
-                top: isHighestAchieved ? '-16px' : '-10px',
-                transform: 'translateX(-50%)',
+            <div 
+              className="absolute transition-all duration-1000 ease-out z-10"
+              style={{ 
+                left: `calc(1.2rem + ${mascotPosition}%)`, 
+                bottom: '-1.8rem' 
               }}
             >
-              <Tooltip
-                side="top"
-                content={
-                  <p className="flex items-center gap-2 font-medium text-sm">
-                    <Gift className="h-4 w-4" />
-                    Phần thưởng: <span className="font-bold">{tier.reward}</span>
-                  </p>
-                }
+              <MascotImage
+                variant="celebrate"
+                size="2xl"
+                onDarkBg
+                animate
+                className="drop-shadow-xl -translate-x-1/2"
+              />
+            </div>
+          );
+        })()}        {/* Header content */}
+        <div className="relative z-10 pr-0 md:pr-36">
+          <div className="flex items-center gap-2 mb-1">
+            <Crown className="h-5 w-5 text-white drop-shadow" />
+            <h2 className="text-lg font-black text-white tracking-tight">Đại sứ iKame</h2>
+          </div>
+          <div className="flex items-center gap-2 mt-2">
+            <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg px-3 py-1.5 flex items-center gap-2">
+              {TierIcon && <TierIcon className="h-4 w-4 text-white" />}
+              <span className="font-black text-white text-sm">Hạng: {currentTierName}</span>
+            </div>
+          </div>
+          <p className="text-white/80 text-xs mt-2 font-medium">
+            <span className="font-black text-white text-base">{points}</span> điểm tích lửa
+          </p>
+        </div>
+      </div>
+
+      {/* ── Progress + milestones + info box ───────────── */}
+      <div className="p-5 md:p-6 bg-card">
+        {/* Progress bar (Desktop) */}
+        <div className="relative px-0 md:px-4 mb-8 hidden md:block">
+          <div className="h-4 w-full bg-muted rounded-full overflow-hidden border border-border shadow-inner">
+            <div
+              className="h-full bg-gradient-to-r from-yellow-400 to-orange-500 dark:from-yellow-500 dark:to-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.6)] rounded-full transition-all duration-1000 ease-out relative"
+              style={{ width: `${progressPercentage}%` }}
+            >
+              <div className="absolute inset-0 bg-white/20 dark:bg-white/10 rounded-full" />
+            </div>
+          </div>
+
+          {AMBASSADOR_TIERS.map((tier) => {
+            const position = (tier.points / MAX_TIER_POINTS) * 100;
+            const isAchieved = points >= tier.points;
+            const isNext = nextTier?.name === tier.name;
+            const isHighestAchieved = isAchieved && currentTier?.name === tier.name;
+
+            return (
+              <div
+                key={tier.name}
+                className="absolute flex flex-col items-center"
+                style={{ left: `${position}%`, top: isHighestAchieved ? '-16px' : '-10px', transform: 'translateX(-50%)' }}
               >
-                <div
-                  className={`
-                    rounded-full flex items-center justify-center border-[3px] transition-all duration-300 cursor-pointer shadow-md hover:scale-110 z-10
-                    ${isHighestAchieved
+                <Tooltip
+                  side="top"
+                  content={
+                    <p className="flex items-center gap-2 font-medium text-sm">
+                      <Gift className="h-4 w-4" />
+                      Phần thưởng: <span className="font-bold">{tier.reward}</span>
+                    </p>
+                  }
+                >
+                  <div className={cn(
+                    'rounded-full flex items-center justify-center border-[3px] transition-all duration-300 cursor-pointer shadow-md hover:scale-110 z-10',
+                    isHighestAchieved
                       ? `${TIER_MILESTONE_ACTIVE[tier.name]} animate-pulse-glow w-12 h-12 shadow-xl ring-4 ring-orange-500/20`
                       : isAchieved
                         ? `${TIER_MILESTONE_ACTIVE[tier.name]} shadow-lg w-9 h-9`
                         : isNext
                           ? 'w-9 h-9 bg-muted border-yellow-500/50 dark:border-yellow-400/50 animate-pulse'
-                          : 'w-9 h-9 bg-muted border-border opacity-40'}
-                  `}
-                >
-                  {isHighestAchieved ? (
-                    <Flame className="h-6 w-6 text-white drop-shadow-md" />
-                  ) : (
-                    <Gift className={`h-4 w-4 ${isAchieved ? 'text-white' : 'text-muted-foreground'}`} />
-                  )}
+                          : 'w-9 h-9 bg-muted border-border opacity-40'
+                  )}>
+                    {isHighestAchieved
+                      ? <Flame className="h-6 w-6 text-white drop-shadow-md" />
+                      : <Gift className={`h-4 w-4 ${isAchieved ? 'text-white' : 'text-muted-foreground'}`} />
+                    }
+                  </div>
+                </Tooltip>
+                <div className="mt-3 text-center whitespace-nowrap">
+                  <div className={cn(
+                    'text-xs font-bold leading-tight mx-auto',
+                    isAchieved ? (TIER_TEXT_ACTIVE[tier.name] ?? 'text-foreground') : 'text-muted-foreground'
+                  )}>
+                    {/* Full name on lg, just points on md */}
+                    <span className="hidden lg:block w-24 whitespace-normal">{tier.name}</span>
+                    <span className="lg:hidden">{tier.points}đ</span>
+                  </div>
+                  <div className="text-[10px] text-muted-foreground font-medium mt-0.5 hidden lg:block">{tier.points}đ</div>
                 </div>
-              </Tooltip>
-              <div className="mt-3 text-center whitespace-nowrap hidden lg:block">
-                <div className={`text-xs font-bold w-24 whitespace-normal leading-tight mx-auto ${isAchieved ? (TIER_TEXT_ACTIVE[tier.name] ?? 'text-foreground') : 'text-muted-foreground'}`}>
-                  {tier.name}
-                </div>
-                <div className="text-[10px] text-muted-foreground font-medium mt-1">{tier.points}đ</div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
 
-      {/* Mobile Vertical Steps */}
-      <div className="md:hidden space-y-4 mb-6">
-        <p className="text-sm font-semibold text-muted-foreground mb-4">Tiến trình hạng:</p>
-        {AMBASSADOR_TIERS.map((tier, index) => {
-          const isAchieved = points >= tier.points;
-          const isNext = nextTier?.name === tier.name;
-          const isHighestAchieved = isAchieved && currentTier?.name === tier.name;
-          
-          return (
-            <div key={tier.name} className="flex items-center gap-3 relative">
-              {index < AMBASSADOR_TIERS.length - 1 && (
-                <div className={`absolute left-[17px] top-9 bottom-[-16px] w-[2px] ${points >= AMBASSADOR_TIERS[index + 1].points ? 'bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.5)]' : 'bg-muted'}`} />
-              )}
-              <div className={`rounded-full flex items-center justify-center border-[3px] shrink-0 z-10 transition-all
-                 ${isHighestAchieved ? `${TIER_MILESTONE_ACTIVE[tier.name]} animate-pulse-glow w-10 h-10 shadow-lg -ml-0.5` : isAchieved ? `${TIER_MILESTONE_ACTIVE[tier.name]} w-9 h-9` : isNext ? 'w-9 h-9 bg-muted border-yellow-500/50' : 'w-9 h-9 bg-muted border-border opacity-50'}`}>
-                {isHighestAchieved ? (
-                    <Flame className="h-5 w-5 text-white drop-shadow-sm" />
-                  ) : (
-                    <Gift className={`h-4 w-4 ${isAchieved ? 'text-white' : 'text-muted-foreground'}`} />
+        {/* Mobile Vertical Steps */}
+        <div className="md:hidden space-y-4 mb-6">
+          <p className="text-sm font-semibold text-muted-foreground mb-4">Tiến trình hạng:</p>
+          {AMBASSADOR_TIERS.map((tier, index) => {
+            const isAchieved = points >= tier.points;
+            const isNext = nextTier?.name === tier.name;
+            const isHighestAchieved = isAchieved && currentTier?.name === tier.name;
+
+            return (
+              <div key={tier.name} className={cn(
+                'flex items-center gap-3 relative p-2 rounded-lg transition-colors',
+                isHighestAchieved && 'bg-orange-50 dark:bg-orange-950/20'
+              )}>
+                {index < AMBASSADOR_TIERS.length - 1 && (
+                  <div className={cn(
+                    'absolute left-[25px] top-11 bottom-[-16px] w-[2px]',
+                    points >= AMBASSADOR_TIERS[index + 1].points
+                      ? 'bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.5)]'
+                      : 'bg-muted'
+                  )} />
                 )}
-              </div>
-              <div className={isHighestAchieved ? '-mt-1' : ''}>
-                <div className={`text-sm font-bold ${isHighestAchieved ? 'text-orange-600 dark:text-orange-400 text-base drop-shadow-sm' : isAchieved ? TIER_TEXT_ACTIVE[tier.name] : 'text-muted-foreground'}`}>
-                  {tier.name} <span className="font-normal text-xs ml-1">({tier.points}đ)</span>
+                <div className={cn(
+                  'rounded-full flex items-center justify-center border-[3px] shrink-0 z-10 transition-all',
+                  isHighestAchieved
+                    ? `${TIER_MILESTONE_ACTIVE[tier.name]} animate-pulse-glow w-10 h-10 shadow-lg -ml-0.5`
+                    : isAchieved
+                      ? `${TIER_MILESTONE_ACTIVE[tier.name]} w-9 h-9`
+                      : isNext
+                        ? 'w-9 h-9 bg-muted border-yellow-500/50'
+                        : 'w-9 h-9 bg-muted border-border opacity-50'
+                )}>
+                  {isHighestAchieved
+                    ? <Flame className="h-5 w-5 text-white drop-shadow-sm" />
+                    : <Gift className={`h-4 w-4 ${isAchieved ? 'text-white' : 'text-muted-foreground'}`} />
+                  }
                 </div>
-                {isHighestAchieved && <div className="text-[10px] text-orange-600/80 dark:text-orange-400/80 font-semibold uppercase tracking-wider mt-0.5 animate-pulse">Vị trí hiện tại</div>}
-                {isNext && <div className="text-xs text-muted-foreground mt-0.5">Phần thưởng: {tier.reward}</div>}
+                <div className={isHighestAchieved ? '-mt-1' : ''}>
+                  <div className={cn(
+                    'text-sm font-bold',
+                    isHighestAchieved
+                      ? 'text-orange-600 dark:text-orange-400 text-base drop-shadow-sm'
+                      : isAchieved
+                        ? TIER_TEXT_ACTIVE[tier.name]
+                        : 'text-muted-foreground'
+                  )}>
+                    {tier.name} <span className="font-normal text-xs ml-1">({tier.points}đ)</span>
+                  </div>
+                  {isHighestAchieved && <div className="text-[10px] text-orange-600/80 dark:text-orange-400/80 font-semibold uppercase tracking-wider mt-0.5 animate-pulse">Vị trí hiện tại</div>}
+                  {isNext && <div className="text-xs text-muted-foreground mt-0.5">Phần thưởng: {tier.reward}</div>}
+                </div>
               </div>
+            );
+          })}
+        </div>
+
+        <div className="h-4 hidden md:block" />
+
+        {/* ── Next-tier info box ─────────────────────────── */}
+        {nextTier && pointsNeeded !== null && (
+          <div className={cn(
+            'rounded-xl p-4 flex items-start gap-3 mt-4 border bg-gradient-to-r',
+            TIER_NEXT_BG[nextTier.name] ?? 'from-orange-50 to-amber-50 border-orange-200 dark:from-orange-950/20 dark:to-amber-950/20 dark:border-orange-800/40'
+          )}>
+            <Zap className="h-5 w-5 text-yellow-500 dark:text-yellow-400 shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <p className="text-sm font-semibold text_primary mb-1">
+                Còn <span className="fg_orange_accent font-black text-base">{pointsNeeded} điểm</span> để lên{' '}
+                <span className="font-black text_primary">{nextTier.name}</span>
+              </p>
+              <p className="text-xs text_secondary">
+                Phần thưởng: <span className="font-semibold text_primary">{nextTier.reward}</span>
+              </p>
+              <Link to="/rewards" className="mt-2 inline-flex items-center gap-1 text-xs font-bold fg_orange_accent hover:underline">
+                Xem chi tiết <ArrowRight className="h-3 w-3" />
+              </Link>
             </div>
-          )
-        })}
+          </div>
+        )}
+
+        {/* Max tier reached */}
+        {!nextTier && currentTier && (
+          <div className="bg-cyan-50 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-800/50 rounded-xl p-4 flex items-start gap-3 mt-4">
+            <Gem className="h-5 w-5 text-cyan-500 dark:text-cyan-400 shrink-0 mt-0.5" />
+            <p className="text-sm text-cyan-700 dark:text-cyan-200 leading-relaxed">
+              Chúc mừng! Bạn đã đạt hạng <span className="font-bold text-cyan-600 dark:text-cyan-400">Champion of the Year</span> — hạng cao nhất.
+              Tiếp tục giới thiệu để duy trì vị thế và nhận vinh danh bảng vàng cuối năm!
+            </p>
+          </div>
+        )}
       </div>
-
-      {/* Spacer for milestone labels below the bar */}
-      <div className="h-4 hidden md:block" />
-
-      {/* ── Next-tier info box ─────────────────────────── */}
-      {nextTier && pointsNeeded !== null && (
-        <div className="bg-muted/60 dark:bg-muted/40 border border-border rounded-xl p-4 flex items-start gap-3 mt-4">
-          <Info className="h-5 w-5 text-yellow-500 dark:text-yellow-400 shrink-0 mt-0.5" />
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Bạn cần tích thêm{' '}
-            <span className="font-bold text-yellow-600 dark:text-yellow-400 text-base">{pointsNeeded} điểm</span>{' '}
-            nữa để thăng hạng{' '}
-            <span className="font-bold text-yellow-600 dark:text-yellow-400">{nextTier.name}</span>.{' '}
-            Nhận ngay <span className="font-bold text-foreground">{nextTier.reward}</span> khi lên hạng!{' '}
-            <Link
-              to="/rewards"
-              className="font-bold text-orange-500 dark:text-orange-400 hover:underline inline-flex items-center gap-0.5 transition-colors mt-2 sm:mt-0 ml-1"
-            >
-              Xem chi tiết &rarr;
-            </Link>
-          </p>
-        </div>
-      )}
-
-      {/* If at max tier */}
-      {!nextTier && currentTier && (
-        <div className="bg-cyan-50 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-800/50 rounded-xl p-4 flex items-start gap-3 mt-4">
-          <Gem className="h-5 w-5 text-cyan-500 dark:text-cyan-400 shrink-0 mt-0.5" />
-          <p className="text-sm text-cyan-700 dark:text-cyan-200 leading-relaxed">
-            Chúc mừng! Bạn đã đạt hạng <span className="font-bold text-cyan-600 dark:text-cyan-400">Champion of the Year</span> — hạng cao nhất.
-            Tiếp tục giới thiệu để duy trì vị thế và nhận vinh danh bảng vàng cuối năm!
-          </p>
-        </div>
-      )}
     </div>
   );
 }

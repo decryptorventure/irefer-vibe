@@ -1,7 +1,7 @@
 import { cn } from '@frontend-team/ui-kit';
 
 export type MascotVariant = 'greeting' | 'search' | 'celebrate' | 'encourage' | 'typing' | 'gift';
-export type MascotSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
+export type MascotSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl';
 
 const MASCOT_IMAGES: Record<MascotVariant, string> = {
   greeting: '/mascot/mascot-greeting.png',
@@ -29,6 +29,8 @@ const SIZE_MAP: Record<MascotSize, string> = {
   xl: 'w-36 h-36',
   '2xl': 'w-44 h-44',
   '3xl': 'w-56 h-56',
+  '4xl': 'w-72 h-72',
+  '5xl': 'w-80 h-80',
 };
 
 interface MascotImageProps {
@@ -58,9 +60,10 @@ export function MascotImage({
       className={cn(
         SIZE_MAP[size],
         'object-contain select-none pointer-events-none',
-        // Remove white background: multiply works on light bg, on dark bg we skip it
-        !onDarkBg && 'mix-blend-multiply dark:mix-blend-screen',
-        onDarkBg && 'mix-blend-screen',
+        // PNGs are RGBA transparent — no blend mode needed; use drop-shadow for contrast
+        onDarkBg
+          ? 'drop-shadow-[0_6px_20px_rgba(0,0,0,0.35)]'
+          : 'drop-shadow-[0_4px_12px_rgba(0,0,0,0.15)]',
         animate && 'mascot-float',
         hideOnMobile && 'hidden md:block',
         className

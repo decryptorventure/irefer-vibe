@@ -9,7 +9,6 @@ import {
   Users,
   LogOut
 } from "lucide-react";
-import { MascotImage } from "@/components/ui/mascot-image";
 
 const navigation = [
   { name: "Tổng quan", href: "/", icon: LayoutDashboard },

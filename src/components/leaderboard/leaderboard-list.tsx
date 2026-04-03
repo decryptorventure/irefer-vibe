@@ -1,3 +1,5 @@
+import { Flame } from 'lucide-react';
+import { cn } from '@frontend-team/ui-kit';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { LeaderboardEntry } from '@/types';
@@ -26,7 +28,10 @@ export function LeaderboardList({ entries }: Props) {
               : 'hover:bg_secondary'
           }`}
         >
-          <div className="w-8 text-center font-bold text_secondary text-sm shrink-0">
+          <div className={cn(
+            'w-8 text-center font-black shrink-0',
+            user.rank <= 6 ? 'fg_orange_accent text-base' : 'text_secondary text-sm'
+          )}>
             {user.rank}
           </div>
           <Avatar className="h-9 w-9 ml-2 shrink-0 bg-background">
@@ -38,6 +43,9 @@ export function LeaderboardList({ entries }: Props) {
           <div className="ml-3 flex-1 min-w-0">
             <p className="text-sm font-medium leading-none flex items-center gap-2">
               <span className="truncate">{user.name}</span>
+              {user.referralCount >= 5 && (
+                <Flame className="h-3.5 w-3.5 text-orange-400 shrink-0" />
+              )}
               {user.isCurrentUser && (
                 <Badge variant="outline" className="text-[10px] h-4 px-1.5 border_orange fg_orange_accent bg_orange_subtle shrink-0">
                   Bạn

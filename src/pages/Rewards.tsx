@@ -15,7 +15,7 @@ export function Rewards() {
   const user = useAuthStore((s) => s.user);
   const { data: stats } = useDashboardStats();
 
-  const points = user?.points ?? stats?.currentPoints ?? 85;
+  const points = user?.points ?? stats?.currentPoints ?? 65;
   const currentTier = getCurrentTier(points);
   const nextTier = getNextTier(points);
   const pointsNeeded = getPointsToNextTier(points);
@@ -30,10 +30,10 @@ export function Rewards() {
         {/* Mascot gift decoration — right side, won't overlap text */}
         <MascotImage
           variant="gift"
-          size="3xl"
+          size="2xl"
           hideOnMobile
           onDarkBg
-          className="absolute right-4 -bottom-6 drop-shadow-lg z-0 opacity-80"
+          className="absolute right-2 bottom-0 drop-shadow-xl z-0 opacity-90"
         />
 
         <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-4 pr-0 md:pr-48">

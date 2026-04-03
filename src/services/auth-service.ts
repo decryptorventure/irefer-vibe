@@ -12,7 +12,7 @@ const MOCK_USER: User = {
   email: 'nguyen.thanh@ikameglobal.com',
   department: 'Phòng Kinh Doanh',
   employeeCode: 'IKG-2024-042',
-  points: 85,
+  points: 65,
   badges: mockAllBadges,
   joinedAt: '2024-01-15T00:00:00Z',
 };

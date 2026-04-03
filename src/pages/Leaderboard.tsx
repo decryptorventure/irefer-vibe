@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Flame, Zap } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Flame, Calendar, BarChart2, Trophy } from 'lucide-react';
+import { cn } from '@frontend-team/ui-kit';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@frontend-team/ui-kit';
 import { useLeaderboard, useDashboardStats } from '@/hooks/use-dashboard';
@@ -9,10 +9,10 @@ import { LeaderboardList } from '@/components/leaderboard/leaderboard-list';
 import { LeaderboardPeriod } from '@/types';
 import { MascotImage } from '@/components/ui/mascot-image';
 
-const PERIOD_TABS: { value: LeaderboardPeriod; label: string }[] = [
-  { value: 'monthly', label: 'Tháng này' },
-  { value: 'quarterly', label: 'Quý này' },
-  { value: 'alltime', label: 'Tất cả' },
+const PERIOD_TABS: { value: LeaderboardPeriod; label: string; icon: React.ReactNode }[] = [
+  { value: 'monthly', label: 'Tháng này', icon: <Calendar className="h-3.5 w-3.5" /> },
+  { value: 'quarterly', label: 'Quý này', icon: <BarChart2 className="h-3.5 w-3.5" /> },
+  { value: 'alltime', label: 'Tất cả', icon: <Trophy className="h-3.5 w-3.5" /> },
 ];
 
 export function Leaderboard() {
@@ -43,19 +43,41 @@ export function Leaderboard() {
         </div>
       </div>
 
-      {/* Period tabs */}
-      <div className="flex gap-2">
-        {PERIOD_TABS.map(({ value, label }) => (
-          <Button
+      {/* Period tabs — segmented pill */}
+      <div className="flex bg_secondary rounded-lg p-1 gap-1 w-fit">
+        {PERIOD_TABS.map(({ value, label, icon }) => (
+          <button
             key={value}
-            variant={period === value ? 'primary' : 'border'}
-            size="s"
             onClick={() => setPeriod(value)}
+            className={cn(
+              'flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all',
+              period === value
+                ? 'bg_accent_primary fg_on_accent shadow-sm'
+                : 'text_secondary hover:text_primary'
+            )}
           >
-            {label}
-          </Button>
+            {icon} {label}
+          </button>
         ))}
       </div>
+
+      {/* Stats strip */}
+      {!isLoading && (
+        <div className="grid grid-cols-3 gap-3">
+          <div className="bg_secondary rounded-xl p-3 text-center">
+            <p className="text-xs text_secondary font-medium">Tổng người</p>
+            <p className="text-xl font-black text_primary">{entries.length}+</p>
+          </div>
+          <div className="bg_secondary rounded-xl p-3 text-center">
+            <p className="text-xs text_secondary font-medium">Điểm cao nhất</p>
+            <p className="text-xl font-black fg_orange_accent">{entries[0]?.points ?? 0}</p>
+          </div>
+          <div className="bg_secondary rounded-xl p-3 text-center">
+            <p className="text-xs text_secondary font-medium">Hạng của bạn</p>
+            <p className="text-xl font-black text_primary">#{currentUser?.rank ?? '—'}</p>
+          </div>
+        </div>
+      )}
 
       {isLoading ? (
         <Card>
@@ -94,13 +116,14 @@ export function Leaderboard() {
 
           {/* Motivational CTA with mascot */}
           {gapToTop3 !== null && gapToTop3 > 0 && (
-            <div className="bg_orange_subtle border border_orange rounded-lg p-4 flex items-center gap-4">
-              <MascotImage variant="encourage" size="lg" animate={false} className="shrink-0" />
-              <p className="text-sm text_primary flex-1">
-                Bạn còn cách Top 3:{' '}
-                <span className="font-bold fg_orange_accent">{gapToTop3} điểm!</span>{' '}
-                Giới thiệu thêm ứng viên để vươn lên nào!
-              </p>
+            <div className="bg_orange_subtle border border_orange rounded-xl p-4 flex items-center gap-3">
+              <MascotImage variant="encourage" size="md" animate className="shrink-0" />
+              <div className="flex-1">
+                <p className="text-sm font-bold text_primary">Bạn sắp vào Top 3! 🔥</p>
+                <p className="text-sm text_secondary mt-0.5">
+                  Còn <span className="font-bold fg_orange_accent">{gapToTop3} điểm</span> nữa thôi — giới thiệu thêm để vươn lên!
+                </p>
+              </div>
             </div>
           )}
 

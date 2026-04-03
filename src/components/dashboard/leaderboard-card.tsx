@@ -65,7 +65,7 @@ export function LeaderboardCard({ className }: Props) {
                 key={user.rank}
                 className={`flex items-center p-2 rounded-lg transition-colors ${
                   user.isCurrentUser
-                    ? 'bg_orange_subtle border-l-2 border_orange'
+                    ? 'bg_orange_subtle border-l-[3px] border_orange'
                     : RANK_BG[user.rank] ?? ''
                 }`}
               >

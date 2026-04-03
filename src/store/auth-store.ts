@@ -36,6 +36,15 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: 'irefer-auth',
+      version: 2,
+      // Migrate stale cached user to match updated mock data
+      migrate: (persisted: unknown, version: number) => {
+        const state = persisted as { user: { points?: number } | null; isAuthenticated?: boolean };
+        if (version < 2 && state.user) {
+          state.user.points = 65; // sync to current MOCK_USER points (Silver Ambassador)
+        }
+        return state;
+      },
       // Only persist user and auth status — token is in localStorage separately
       partialize: (state) => ({ user: state.user, isAuthenticated: state.isAuthenticated }),
     }

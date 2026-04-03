@@ -36,14 +36,14 @@ const mockStats: DashboardStats = {
   candidatesReferred: { total: 12, trend: 3, trendText: "+3 so với tháng trước" },
   candidatesProcessing: { total: 4, trend: 2, trendText: "+2 tuần này" },
   candidatesOnboarded: { total: 3, trend: 1, trendText: "+1 tháng này" },
-  points: { total: 85, trend: 15, trendText: "+15 tuần này" }
+  points: { total: 65, trend: 15, trendText: "+15 tuần này" }
 };
 
 export const mockLeaderboard: LeaderboardUser[] = [
   { rank: 1, name: "Hoàng Minh", department: "Phòng CNTT", points: 150, avatar: "HM" },
   { rank: 2, name: "Thùy Ngân", department: "Phòng Marketing", points: 120, avatar: "TN" },
   { rank: 3, name: "Phúc Long", department: "Phòng Kinh Doanh", points: 95, avatar: "PL" },
-  { rank: 4, name: "Nguyễn Thành", department: "Phòng Kinh Doanh", points: 85, avatar: "NT", isCurrentUser: true },
+  { rank: 4, name: "Nguyễn Thành", department: "Phòng Kinh Doanh", points: 65, avatar: "NT", isCurrentUser: true },
   { rank: 5, name: "Bảo Trân", department: "Phòng HR", points: 60, avatar: "BT" },
 ];
 
